@@ -1,12 +1,34 @@
+// Página de pago que ve el cliente.
+// - Negocio conectado (kit/config.js → SUPABASE): el enlace trae solo #t=<token>; CLABE, beneficiario y monto
+//   salen de la base (cobro_por_token), así nadie puede armar un enlace con otra CLABE en este dominio.
+// - Sitio de ADN (demo): los datos vienen en el enlace, con aviso de que es un ejemplo.
 import { formatoClabe, bancoDeClabe, validarClabe } from "../kit/cobro.js";
+import { SUPABASE } from "../kit/config.js";
 const $ = (s) => document.querySelector(s);
 const pesos = (n) => new Intl.NumberFormat("es-MX", { style: "currency", currency: "MXN" }).format(n);
-let d = null;
-try { d = JSON.parse(decodeURIComponent(escape(atob(location.hash.slice(1))))); } catch (e) {}
-if (!d || !validarClabe(d.c).ok) {
-  $("#monto").textContent = "Este enlace de pago no es válido.";
-  $("#pague").hidden = true;
-} else {
+const rpc = async (fn, args) => {
+  const r = await fetch(`${SUPABASE.url}/rest/v1/rpc/${fn}`, { method: "POST", headers: { apikey: SUPABASE.anonKey, Authorization: `Bearer ${SUPABASE.anonKey}`, "Content-Type": "application/json" }, body: JSON.stringify(args) });
+  if (!r.ok) throw new Error("No pudimos conectar.");
+  return r.json();
+};
+
+async function leer() {
+  if (SUPABASE) {
+    $("#aviso-demo").hidden = true;
+    const t = new URLSearchParams(location.hash.slice(1)).get("t") || "";
+    if (!/^[0-9a-f]{24}$/.test(t)) return null;
+    const [c] = await rpc("cobro_por_token", { t });
+    return c ? { n: c.negocio, b: c.beneficiario, c: c.clabe, m: +c.monto, k: c.concepto, r: c.referencia, d: c.dimo, estado: c.estado, t } : null;
+  }
+  try { return JSON.parse(decodeURIComponent(escape(atob(location.hash.slice(1))))); } catch (e) { return null; }
+}
+
+function invalido(texto) { $("#monto").textContent = texto; $("#pague").hidden = true; }
+
+const d = await leer().catch(() => null);
+if (!d || !validarClabe(d.c).ok) invalido("Este enlace de pago no es válido.");
+else if (d.estado === "cancelado") { $("#negocio").textContent = d.n; invalido("Este cobro fue cancelado."); }
+else {
   $("#negocio").textContent = d.n;
   $("#monto").textContent = pesos(d.m);
   const filas = [["CLABE", formatoClabe(d.c), d.c], ["Banco", bancoDeClabe(d.c)], ["Beneficiario", d.b], ["Concepto", d.k, d.k], ["Referencia", d.r, d.r]];
@@ -25,5 +47,11 @@ if (!d || !validarClabe(d.c).ok) {
     }
     cont.appendChild(p);
   }
-  $("#pague").addEventListener("click", () => { $("#gracias").hidden = false; $("#pague").hidden = true; });
+  const gracias = () => { $("#gracias").hidden = false; $("#pague").hidden = true; };
+  if (d.estado === "pagado") { gracias(); $("#gracias").querySelector("span").textContent = "Este cobro ya está pagado."; }
+  else if (d.estado === "avisado") gracias();
+  $("#pague").addEventListener("click", async () => {
+    if (d.t) { try { await rpc("avisar_pago", { t: d.t }); } catch (e) { $("#pague").textContent = "No pudimos avisar. Intenta otra vez"; return; } }
+    gracias();
+  });
 }

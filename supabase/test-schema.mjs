@@ -158,5 +158,77 @@ await db.exec(`reset role`);
 const rec = await filas(`select * from citas_por_recordar(72)`);
 ok(rec.length >= 1 && rec.every((c) => c.cliente_tel && c.servicio), `citas por recordar en 72 h: ${rec.length}, con teléfono y servicio`);
 
+// --- 4. Cobros ---
+const { referencia: refJs } = await import("../kit/cobro.js");
+ok((await filas(`select ref_cobro(481) as r`))[0].r === refJs(481) && (await filas(`select ref_cobro(1234567) as r`))[0].r === refJs(1234567), "ref_cobro en SQL = referencia() de kit/cobro.js");
+ok((await filas(`select clabe_valida('002010077777777771') as a, clabe_valida('002010077777777772') as b`)).map((r) => [r.a, r.b]).join() === "true,false", "clabe_valida: dígito de control");
+ok((await filas(`select concepto_spei('Cita limpieza — Sofía #2') as c`))[0].c === "CITA LIMPIEZA SOFIA 2", "concepto_spei: sin acentos ni símbolos");
+await como("authenticated", EQUIPO);
+await falla(`select * from crear_cobro(600, 'Cita', '6691234567')`, /CLABE/, "sin CLABE configurada no se crean cobros");
+await db.exec(`reset role; insert into ajustes (clave, valor) values ('cobro', '{"clabe":"002010077777777771","beneficiario":"Consultorio Sonrisa SC","dimo":""}')`);
+await como("authenticated", EXTRANO);
+await falla(`select * from crear_cobro(600, 'Cita', null)`, /Solo el equipo/, "una cuenta fuera del equipo no crea cobros");
+await como("authenticated", EQUIPO);
+const cb = (await filas(`select * from crear_cobro(600, 'Cita limpieza', '+52 669 123 4567')`))[0];
+ok(cb.referencia === refJs(Number(cb.id)) && cb.token.length === 24, `crear_cobro: referencia ${cb.referencia} y token`);
+await falla(`select * from crear_cobro(0, 'x', null)`, /check/, "monto cero no");
+await falla(`insert into cobros (monto, concepto) values (1, 'X')`, /permission denied/, "el equipo no inserta cobros directo");
+await como("anon");
+await falla(`select * from cobros`, /permission denied/, "anon no lee cobros");
+const vc = (await filas(`select * from cobro_por_token('${cb.token}')`))[0];
+ok(vc.clabe === "002010077777777771" && Number(vc.monto) === 600 && vc.concepto === "CITA LIMPIEZA" && vc.negocio === "Consultorio Sonrisa" && !("cliente_tel" in vc), "cobro_por_token: CLABE y monto de la base, sin teléfono");
+ok((await filas(`select * from cobro_por_token('falso')`)).length === 0, "token inventado no devuelve datos");
+ok((await filas(`select avisar_pago('${cb.token}') as e`))[0].e === "avisado", "el cliente avisa que pagó");
+ok((await filas(`select avisar_pago('${cb.token}') as e`))[0].e === "avisado", "avisar dos veces no cambia nada");
+await como("authenticated", EQUIPO);
+await db.exec(`update cobros set estado = 'pagado', pagado_en = now() where id = ${cb.id}`);
+await falla(`update cobros set monto = 1 where id = ${cb.id}`, /permission denied/, "el equipo no cambia el monto");
+await como("anon");
+ok((await filas(`select avisar_pago('${cb.token}') as e`))[0].e === "pagado", "ya pagado: el aviso no lo regresa");
+await db.exec(`reset role; update ajustes set valor = '{"clabe":"002010077777777772","beneficiario":"Otro"}' where clave = 'cobro'`);
+await como("anon");
+ok((await filas(`select * from cobro_por_token('${cb.token}')`)).length === 0, "con una CLABE inválida en ajustes no se muestran datos de pago");
+
+// --- 5. Autofactura ---
+await db.exec(`reset role; insert into tickets (folio, fecha, total, forma_pago, items) values
+  ('LM482', ahora_local()::date, 175, '03', '[{"descripcion":"Latte","cantidad":2,"precio":65},{"descripcion":"Galleta","cantidad":1,"precio":45}]'),
+  ('LM100', ahora_local()::date - 70, 90, '04', '[{"descripcion":"Latte","cantidad":1,"precio":90}]');`);
+await como("anon");
+await falla(`select * from tickets`, /permission denied/, "anon no ve los tickets");
+const pf = (f, t, rfc = "EKU9003173C9") => `select pedir_factura('${f}', ${t}, '${rfc}', 'Escuela Kemper Urgate', '42501', '601', 'G03', 'compras@ejemplo.mx') as id`;
+await falla(pf("LM482", 170), /No encontramos/, "total que no coincide con el ticket");
+await falla(pf("NOEXISTE", 175), /No encontramos/, "folio que no existe");
+await falla(pf("LM100", 90), /plazo/, "ticket de hace 70 días: fuera de plazo");
+await falla(pf("LM482", 175, "123"), /check/, "RFC con formato inválido");
+const idf = (await filas(pf("lm482", 175)))[0].id;
+ok(idf > 0, "pedir_factura: folio en minúsculas también sirve");
+await falla(pf("LM482", 175), /ya tiene factura/, "no se pide dos veces el mismo ticket");
+ok((await filas(`select estado_factura('LM482') as e`))[0].e === "pendiente", "el cliente consulta el estado");
+await falla(`select * from facturas_por_timbrar()`, /permission denied/, "anon no pide las facturas por timbrar");
+await como("authenticated", EQUIPO);
+ok((await filas(`select rfc from facturas`))[0].rfc === "EKU9003173C9", "el equipo ve las solicitudes");
+await falla(`update facturas set estado = 'timbrada'`, /permission denied/, "el equipo no marca una factura como timbrada");
+await db.exec(`reset role; update facturas set estado = 'error', intentos = 3, error = 'x' where id = ${idf}`);
+await como("authenticated", EQUIPO);
+await falla(`select reintentar_factura(${idf})`, /Solo la dueña/, "el equipo no reintenta");
+await como("authenticated", DUENA);
+await db.exec(`select reintentar_factura(${idf})`);
+await db.exec(`reset role`);
+const pt = await filas(`select * from facturas_por_timbrar()`);
+ok(pt.length === 1 && pt[0].forma_pago === "03" && pt[0].items.length === 2, "la dueña reintenta y el servidor la ve con su ticket");
+
+// --- 6. Calendario ---
+await db.exec(`reset role; insert into calendarios (token, personal) values ('cal-ana', 'ana'), ('cal-todos', null)`);
+const ca = await filas(`select * from citas_calendario('cal-ana')`), ct = await filas(`select * from citas_calendario('cal-todos')`);
+ok(ca.length > 0 && ca.every((c) => c.personal === "Dra. Ana") && ct.length > ca.length, `calendario: Ana ${ca.length} citas, todo el negocio ${ct.length}`);
+ok((await filas(`select * from citas_calendario('nada')`)).length === 0, "token desconocido: calendario vacío");
+await como("anon");
+await falla(`select * from citas_calendario('cal-ana')`, /permission denied/, "anon no lee el calendario directo (solo la función del servidor)");
+await como("authenticated", EQUIPO);
+ok((await filas(`select * from calendarios`)).length === 0, "el equipo (no dueña) no ve los enlaces de calendario");
+await como("authenticated", DUENA);
+ok((await filas(`select * from calendarios`)).length === 2, "la dueña ve y maneja los enlaces");
+await db.exec(`reset role`);
+
 console.log(`\n${total - fallas} de ${total} pruebas pasaron.`);
 process.exit(fallas ? 1 : 0);

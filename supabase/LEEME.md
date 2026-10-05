@@ -34,6 +34,8 @@ node scripts/preparar-funciones.mjs      # copia kit/ y servidor/ a supabase/fun
 supabase functions deploy whatsapp --no-verify-jwt
 supabase functions deploy voz --no-verify-jwt
 supabase functions deploy recordatorios --no-verify-jwt
+supabase functions deploy facturas --no-verify-jwt      # si contrató autofactura
+supabase functions deploy calendario --no-verify-jwt    # si quiere ver las citas en su calendario
 ```
 
 Secretos (Supabase → Edge Functions → Secrets). `SUPABASE_URL` y `SUPABASE_SERVICE_ROLE_KEY` ya vienen.
@@ -48,6 +50,7 @@ Secretos (Supabase → Edge Functions → Secrets). `SUPABASE_URL` y `SUPABASE_S
 | `WA_PLANTILLA_RECORDATORIO` | Nombre de la plantilla aprobada (ver abajo). |
 | `CRON_SECRETO` | Clave que manda el cron a `recordatorios`. |
 | `TWILIO_AUTH_TOKEN`, `VOZ_URL_BASE`, `TRANSFERIR_A` | Recepcionista telefónica (opcional). |
+| `FACTURAMA_USUARIO`, `FACTURAMA_CLAVE`, `FACTURAMA_SANDBOX`, `EMISOR_CP` | Autofactura. `FACTURAMA_SANDBOX=no` solo cuando ya timbró bien en pruebas. |
 
 ### WhatsApp (Meta)
 
@@ -72,11 +75,43 @@ Supabase → Integrations → Cron: cada hora, petición POST a `/functions/v1/r
 - `TRANSFERIR_A` = número del negocio en formato `+52…` para pasar llamadas a una persona; si no, se avisa al equipo
   y la plática aparece en "Necesita a una persona".
 
+### Cobros por transferencia
+
+1. La dueña guarda la cuenta (la escribe ella, nunca nosotros):
+   `insert into ajustes (clave, valor) values ('cobro', '{"clabe":"…18 dígitos…","beneficiario":"…","dimo":""}') on conflict (clave) do update set valor = excluded.valor;`
+   Si la CLABE no pasa el dígito de control, no se crean cobros ni se muestran datos de pago.
+2. El equipo crea cada cobro con `crear_cobro(monto, concepto, tel)` → `referencia` y `token`.
+   El enlace para el cliente es `https://<sitio>/herramientas/pagar.html#t=<token>`: los datos salen de la base,
+   el enlace no los trae (así nadie puede mandar un enlace con otra CLABE en el dominio del negocio).
+3. "Ya pagué" pasa el cobro a `avisado`. El equipo lo marca `pagado` al ver el dinero (o con la conciliación del
+   estado de cuenta en `herramientas/cobro.html`).
+
+### Autofactura
+
+1. Cuenta de Facturama (PAC) con el CSD del negocio cargado. Probar primero en sandbox.
+2. El negocio sube sus tickets a la tabla `tickets` (folio, fecha, total, forma de pago SAT, conceptos con IVA incluido).
+   Desde su punto de venta, o a mano desde Table Editor.
+3. El cliente entra a `herramientas/factura.html`, escribe folio, total y sus datos → `pedir_factura` revisa que el
+   ticket exista, que el total coincida y que esté en plazo (mes de la compra + 3 días).
+4. Cron cada 10 min: POST a `/functions/v1/facturas` con `x-cron: <CRON_SECRETO>`. Vuelve a validar el RFC con su
+   dígito, timbra, guarda el UUID y manda la factura por correo. Si los datos están mal queda en `error` con el motivo;
+   si Facturama falla, se reintenta hasta 3 veces. La dueña la regresa con `reintentar_factura(id)`.
+
+### Citas en el calendario del teléfono
+
+1. La dueña crea un enlace (uno por persona, o `null` para todo el negocio):
+   `insert into calendarios (personal) values ('ana') returning token;`
+2. En Google Calendar → Otros calendarios → Desde URL (o en el iPhone: Ajustes → Calendario → Cuentas → Agregar
+   calendario suscrito): `https://<proyecto>.supabase.co/functions/v1/calendario?t=<token>`.
+3. Muestra 14 días atrás y 90 adelante, con nombre y WhatsApp del cliente. Google lo refresca cada varias horas;
+   el iPhone, según su ajuste. El enlace es secreto: si se filtra, se borra la fila y se crea otro.
+
 ## 4. Pendientes por conectar
 
-- **Facturación**: cuenta de Facturama (u otro PAC). `servidor/facturacion.js` usa el sandbox; revisar su
-  documentación vigente antes de producción. Falta la tabla de solicitudes y la función que timbra.
+- **Pantalla del equipo para cobros**: hoy `crear_cobro` se llama desde el servidor o el SQL Editor; falta su botón en
+  la barra del negocio.
 - **CoDi con QR**: depende del banco del negocio. Hoy: SPEI a la CLABE o DiMo al celular.
 - **Reseñas**: leer y publicar respuestas requiere la API de Google Business Profile (OAuth del dueño).
   Hoy: invitación con enlace directo y respuestas que el dueño copia.
-- **Google Calendar**: sincronizar la agenda con el calendario que el negocio ya usa.
+- **Google Calendar en dos sentidos** (que un evento del calendario bloquee la agenda): requiere OAuth del negocio.
+  Hoy la agenda se ve en el calendario (ICS), pero los bloqueos se ponen en la tabla `bloqueos`.

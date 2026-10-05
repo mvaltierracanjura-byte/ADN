@@ -267,6 +267,55 @@ await prueba("diagnóstico: recomienda y arma el WhatsApp", () => enPagina("/her
   assert.match(decodeURIComponent(await p.getAttribute("#resultado a.boton.wa", "href")), /Hice el diagnóstico/);
 }));
 
+// Negocio conectado: kit/config.js con Supabase (falso, en el mismo origen para respetar la CSP).
+async function conectado(ruta, rpcs, fn) {
+  const ctx = await navegador.newContext({ viewport: { width: 390, height: 844 } });
+  const p = await ctx.newPage();
+  const errores = [], llamadas = [];
+  p.on("pageerror", (e) => errores.push(e.message));
+  await p.route("**/kit/config.js", (r) => r.fulfill({ contentType: "text/javascript", body: `export const SUPABASE = { url: "${URL_BASE}/falso", anonKey: "anon" }; export const NEGOCIO_WHATSAPP = "";` }));
+  await p.route("**/falso/rest/v1/rpc/*", async (r) => {
+    const fn = r.request().url().split("/").pop(), cuerpo = JSON.parse(r.request().postData() || "{}");
+    llamadas.push({ fn, cuerpo });
+    const [status, body] = rpcs[fn](cuerpo);
+    await r.fulfill({ status, contentType: "application/json", body: JSON.stringify(body) });
+  });
+  try { await p.goto(URL_BASE + ruta, { waitUntil: "networkidle" }); await fn(p, llamadas); assert.deepEqual(errores, []); }
+  finally { await ctx.close(); }
+}
+const COBRO = { negocio: "Consultorio Sonrisa", beneficiario: "Consultorio Sonrisa SC", clabe: "002010077777777771", dimo: null, monto: 600, concepto: "CITA LIMPIEZA", referencia: "0004817", estado: "pendiente" };
+await prueba("pago conectado: datos de la base, sin aviso de demo, y avisa el pago", () => conectado("/herramientas/pagar.html#t=0123456789abcdef01234567",
+  { cobro_por_token: () => [200, [COBRO]], avisar_pago: () => [200, "avisado"] }, async (p, llamadas) => {
+    assert.equal(await p.isVisible("#aviso-demo"), false);
+    assert.match(await p.textContent("#datos"), /002 010 07777777777 1/);
+    assert.match(await p.textContent("#monto"), /600/);
+    await p.click("#pague");
+    await p.waitForSelector("#gracias:not([hidden])");
+    assert.deepEqual(llamadas.map((l) => l.fn), ["cobro_por_token", "avisar_pago"]);
+  }));
+await prueba("pago conectado: un enlace con datos en vez de token no muestra ninguna CLABE", () => conectado("/herramientas/pagar.html#eyJjIjoiMDAyMDEwMDc3Nzc3Nzc3NzcxIn0",
+  { cobro_por_token: () => [200, []] }, async (p, llamadas) => {
+    assert.match(await p.textContent("#monto"), /no es válido/);
+    assert.equal(llamadas.length, 0);
+  }));
+await prueba("autofactura conectada: manda la solicitud a la base y muestra sus errores", () => {
+  let veces = 0;
+  return conectado("/herramientas/factura.html", { pedir_factura: () => (++veces === 1 ? [400, { message: "No encontramos ese ticket con ese total. Revisa tu ticket." }] : [200, 7]) }, async (p, llamadas) => {
+    assert.equal(await p.isVisible(".aviso-demo"), false);
+    await p.fill("#folio", "A123"); await p.fill("#total", "250");
+    await p.fill("#rfc", "EKU9003173C9"); await p.dispatchEvent("#rfc", "input");
+    await p.fill("#nombre", "Escuela Kemper Urgate SA de CV"); await p.fill("#cp", "26015"); await p.fill("#correo", "a@b.mx");
+    await p.selectOption("#regimen", "601"); await p.selectOption("#uso", "G03");
+    await p.click("#facturar");
+    await p.waitForSelector("#errores .error-msj");
+    assert.match(await p.textContent("#errores"), /No encontramos ese ticket/);
+    await p.click("#facturar");
+    await p.waitForSelector("#vista .ok-msj");
+    assert.match(await p.textContent("#vista"), /llega a a@b\.mx/);
+    assert.deepEqual(llamadas[1].cuerpo, { p_folio: "A123", p_total: 250, p_rfc: "EKU9003173C9", p_nombre: "ESCUELA KEMPER URGATE", p_cp: "26015", p_regimen: "601", p_uso: "G03", p_correo: "a@b.mx" });
+  });
+});
+
 await navegador.close();
 servidor.close();
 console.log(`\n${pruebas - fallas} de ${pruebas} pruebas pasaron.`);

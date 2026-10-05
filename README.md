@@ -8,7 +8,8 @@ Este repo tiene:
 - **El kit para clientes**, con 11 herramientas que se pueden probar en el sitio: agenda con recordatorios,
   asistente de WhatsApp y recepcionista telefónica con IA, bandeja inteligente y reactivación de clientes, reseñas
   de Google, cobro por transferencia sin comisión, autofactura CFDI 4.0, pronóstico de producción, calendario de
-  contenido, aparecer en Google y en la IA, y generador de aviso de privacidad.
+  contenido, aparecer en Google y en la IA, y generador de aviso de privacidad. Las citas también se ven en el
+  calendario del teléfono (Google, iPhone, Outlook).
 
 Sitio estático (HTML, CSS y JS sin build). Servidor en Supabase Edge Functions.
 

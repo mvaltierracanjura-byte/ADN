@@ -9,9 +9,12 @@
   sección de herramientas. Demo de Abi bilingüe.
 - Servidor listo para clientes: asistente de WhatsApp con Claude, recepcionista telefónica (Twilio), recordatorios,
   base de datos con seguridad por rol (`supabase/`).
-- 249 pruebas automáticas (76 de lógica, 49 de base de datos, 124 de navegador).
+- Tercera ronda: cobros guardados en la base (el enlace de pago lleva solo un token), autofactura conectada a Facturama
+  (tickets, solicitudes, timbrado con reintentos y correo), citas en el calendario del teléfono (ICS) y pruebas en
+  GitHub Actions en cada push.
+- 294 pruebas automáticas (84 de lógica, 83 de base de datos, 127 de navegador).
 
-**Falta (depende de Marco o de la dueña de Osako):** domicilio para el aviso de privacidad, repo en GitHub, dominio y
+**Falta (depende de Marco o de la dueña de Osako):** domicilio para el aviso de privacidad, conectar Netlify al repo, dominio y
 correo propios, perfil de Google, foto, precios, testimonio y números de Osako, medición de visitas.
 
 ---
