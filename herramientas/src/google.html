@@ -1,0 +1,38 @@
+<main id="contenido" class="envoltura">
+  <section class="tool-cabeza" style="padding-block-end:0">
+    <p class="ceja">Herramienta · Atender</p>
+    <h1>Aparece en Google y en la IA</h1>
+    <p class="lead">Cuando alguien pregunta a Google, ChatGPT o Gemini “¿dónde tomo un buen café en Mazatlán?”, recomiendan negocios con perfil completo, reseñas y datos claros. Revisa qué te falta y genera tus datos estructurados.</p>
+  </section>
+  <div class="dos">
+    <section class="panel" aria-labelledby="t-rev">
+      <header><p class="ceja">1. Revisión</p><h2 id="t-rev">¿Qué tienes hoy?</h2></header>
+      <div id="puntos" class="paso"></div>
+      <div class="kpis" id="puntaje"></div>
+      <div id="pendientes"></div>
+    </section>
+    <section class="panel" aria-labelledby="t-ld">
+      <header><p class="ceja">2. Datos estructurados</p><h2 id="t-ld">Código para tu página</h2>
+        <p class="sub">Pega esto en el &lt;head&gt; de tu página web. Le dice a Google y a la IA quién eres, dónde estás y cuándo abres.</p></header>
+      <div class="campos2">
+        <label for="nombre">Nombre del negocio<input id="nombre" value="Café La Muestra"></label>
+        <label for="tipo">Tipo<select id="tipo"></select></label>
+      </div>
+      <div class="campos2">
+        <label for="tel">Teléfono<input id="tel" value="+52 669 000 0000"></label>
+        <label for="cp">Código postal<input id="cp" value="82000" inputmode="numeric"></label>
+      </div>
+      <label for="calle">Calle y número<input id="calle" value="Av. Ejemplo 123"></label>
+      <div class="campos2">
+        <label for="colonia">Colonia<input id="colonia" value="Centro"></label>
+        <label for="url">Página web<input id="url" value="https://ejemplo.mx"></label>
+      </div>
+      <div class="campos2">
+        <label for="abre">Abre (lun–sáb)<input id="abre" type="time" value="08:00"></label>
+        <label for="cierra">Cierra<input id="cierra" type="time" value="21:00"></label>
+      </div>
+      <label for="codigo">Código<textarea id="codigo" rows="12" readonly style="font-family:var(--mono);font-size:.82rem"></textarea></label>
+      <div class="acciones-mini"><button type="button" id="copiar">Copiar código</button></div>
+    </section>
+  </div>
+</main>

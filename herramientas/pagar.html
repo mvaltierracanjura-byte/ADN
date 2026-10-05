@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Datos para pagar</title>
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#13211e">
+<link rel="icon" href="../img/icono.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../estilos.css">
+<link rel="stylesheet" href="herramientas.css">
+</head>
+<body>
+<main id="contenido" class="envoltura" style="max-width:560px;padding-block:32px 64px">
+  <p class="aviso-demo" style="margin-bottom:16px"><span><b>Página de ejemplo de ADN.</b> No hagas pagos reales a estos datos. En el sistema de un negocio, los datos salen de su propia base de datos, no del enlace.</span></p>
+  <section class="panel" aria-live="polite">
+    <header><p class="ceja" id="negocio">Pago</p><h1 style="font-size:1.6rem" id="monto">—</h1><p class="sub">Paga por transferencia desde la app de tu banco. No hay comisión.</p></header>
+    <div id="datos"></div>
+    <div class="ok-msj" id="gracias" hidden><b>¡Gracias!</b><span>Avisamos al negocio. En cuanto vea tu pago en su banco, te confirma por WhatsApp.</span></div>
+    <button class="boton" type="button" id="pague" style="justify-self:start">Ya pagué</button>
+  </section>
+  <p class="sub" style="margin-top:16px;color:var(--muted);font-size:.85rem">Cobro hecho con <a href="../">ADN</a>. Revisa que el beneficiario sea el negocio antes de pagar.</p>
+</main>
+<script type="module" src="pagar.js"></script>
+</body>
+</html>

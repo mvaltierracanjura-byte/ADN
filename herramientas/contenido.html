@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="es">
+<head>
+<!-- Generado por scripts/herramientas.mjs. Edita herramientas/src/. -->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Calendario de contenido · ADN</title>
+<meta name="description" content="Un mes de publicaciones para Instagram y Facebook con tus productos y las fechas que importan en México.">
+<link rel="canonical" href="https://adn-mazatlan.netlify.app/herramientas/contenido.html">
+<meta property="og:title" content="Calendario de contenido · ADN">
+<meta property="og:description" content="Un mes de publicaciones para Instagram y Facebook con tus productos y las fechas que importan en México.">
+<meta property="og:image" content="https://adn-mazatlan.netlify.app/img/og.png">
+<meta name="theme-color" content="#13211e">
+<link rel="icon" href="../img/icono.svg" type="image/svg+xml">
+<link rel="preload" href="../fuentes/unbounded.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="../estilos.css">
+<link rel="stylesheet" href="herramientas.css">
+</head>
+<body data-raiz="../">
+<a class="saltar" href="#contenido">Saltar al contenido</a>
+<header class="nav">
+  <div class="envoltura">
+    <a class="marca" href="../" aria-label="ADN, inicio"><svg viewBox="0 0 26 26" aria-hidden="true"><path d="M6 2c0 8 14 8 14 11S6 16 6 24" fill="none" stroke="var(--t)" stroke-width="2.6" stroke-linecap="round"/><path d="M20 2c0 8-14 8-14 11s14 3 14 11" fill="none" stroke="var(--a)" stroke-width="2.6" stroke-linecap="round"/></svg>ADN</a>
+    <div class="nav-der"><a class="idioma" href="./">Herramientas</a><a class="boton wa" data-wa="Hola, ADN. Probé el calendario de contenido y quiero algo así para mi negocio.">WhatsApp</a></div>
+  </div>
+</header>
+<main id="contenido" class="envoltura">
+  <section class="tool-cabeza" style="padding-block-end:0">
+    <p class="ceja">Herramienta · Ganar clientes</p>
+    <h1>Calendario de contenido</h1>
+    <p class="lead">Un mes de publicaciones con tus productos y las fechas que importan en México y en Mazatlán, como el Carnaval. Tú solo tomas la foto o el video.</p>
+  </section>
+  <div class="dos">
+    <section class="panel" aria-labelledby="t-datos">
+      <header><p class="ceja">Tu negocio</p><h2 id="t-datos">Datos</h2></header>
+      <label for="negocio">Nombre<input id="negocio" value="Café La Muestra"></label>
+      <label for="productos">Productos que quieres mover (separados por coma)<input id="productos" value="Latte, Frappé de caramelo, Galleta rellena, Matcha latte"></label>
+      <div class="campos2">
+        <label for="mes">Mes<input id="mes" type="month"></label>
+        <label for="frecuencia">Publicar<select id="frecuencia"><option value="1,3,5">3 veces por semana</option><option value="2,5">2 veces por semana</option><option value="1,2,3,4,5,6">Diario (lun–sáb)</option></select></label>
+      </div>
+      <p class="sub">En el sistema real, la IA escribe el texto de cada publicación en el tono de tu negocio, sin inventar precios ni promociones.</p>
+    </section>
+    <section class="panel" aria-labelledby="t-cal">
+      <header><p class="ceja">Calendario</p><h2 id="t-cal">Publicaciones del mes</h2></header>
+      <ul class="lista-citas" id="calendario"></ul>
+    </section>
+  </div>
+</main>
+<footer>
+  <div class="envoltura"><span>ADN · Mazatlán, Sinaloa</span><nav aria-label="Pie de página"><a href="../">Inicio</a><a href="./">Todas las herramientas</a><a href="../privacidad.html">Aviso de privacidad</a></nav></div>
+</footer>
+<script src="../datos.js"></script>
+<script type="module" src="../adn.js"></script>
+<script type="module" src="contenido.js"></script>
+</body>
+</html>

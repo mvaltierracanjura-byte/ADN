@@ -1,0 +1,40 @@
+<main id="contenido" class="envoltura">
+  <section class="tool-cabeza" style="padding-block-end:0">
+    <p class="ceja">Diagnóstico gratuito</p>
+    <h1>¿Por dónde empiezo?</h1>
+    <p class="lead">Contesta 8 preguntas con los números de tu negocio. Te decimos cuánto se te puede estar yendo al mes y qué herramienta te conviene primero. No pedimos datos personales.</p>
+  </section>
+  <div class="dos">
+    <form class="panel" id="preguntas" novalidate aria-labelledby="t-preg">
+      <header><p class="ceja">Tu negocio</p><h2 id="t-preg">8 preguntas</h2></header>
+      <div class="campos2">
+        <label for="negocio">Nombre del negocio (opcional)<input id="negocio"></label>
+        <label for="giro">1. Giro<select id="giro"></select></label>
+      </div>
+      <div class="campos2">
+        <label for="mensajes">2. Mensajes de WhatsApp o Instagram al día<input id="mensajes" type="number" min="0" value="25"></label>
+        <label for="responde">3. ¿Qué tan rápido contestas?<select id="responde"><option value="minutos">En minutos</option><option value="horas" selected>En horas</option><option value="dia">Al otro día o más</option></select></label>
+      </div>
+      <div class="campos2">
+        <label for="ticket">4. ¿Cuánto vale una venta o cita promedio? (MXN)<input id="ticket" type="number" min="0" value="250"></label>
+        <label for="llamadas">5. Llamadas que no alcanzas a contestar al día<input id="llamadas" type="number" min="0" value="2"></label>
+      </div>
+      <div class="campos2">
+        <label for="citas">6. ¿Trabajas con citas o reservaciones?<select id="citas"><option value="no">No</option><option value="si">Sí</option></select></label>
+        <label for="google">7. ¿Estás en Google?<select id="google"><option value="no">No tengo perfil</option><option value="si_sin_resenas" selected>Sí, con pocas reseñas</option><option value="si">Sí, con muchas reseñas y las contesto</option></select></label>
+      </div>
+      <div class="campos2" id="bloque-citas" hidden>
+        <label for="citas-semana">Citas por semana<input id="citas-semana" type="number" min="0" value="60"></label>
+        <label for="inasist">% que no llega<input id="inasist" type="number" min="0" max="100" value="20"></label>
+      </div>
+      <div class="campos2">
+        <label for="cobro">8. ¿Cómo te pagan casi siempre?<select id="cobro"><option value="efectivo">Efectivo</option><option value="tarjeta" selected>Terminal de tarjeta</option><option value="transferencia">Transferencia</option></select></label>
+        <label class="casilla" for="factura" style="align-self:end"><input type="checkbox" id="factura"><span>Hago facturas a mano</span></label>
+      </div>
+    </form>
+    <section class="panel" aria-labelledby="t-res" aria-live="polite">
+      <header><p class="ceja">Resultado</p><h2 id="t-res">Tu diagnóstico</h2></header>
+      <div id="resultado"></div>
+    </section>
+  </div>
+</main>

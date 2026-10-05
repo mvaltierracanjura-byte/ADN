@@ -1,0 +1,38 @@
+<main id="contenido" class="envoltura">
+  <section class="tool-cabeza" style="padding-block-end:0">
+    <p class="ceja">Herramienta · Tomar y cobrar</p>
+    <h1>Cobro por transferencia</h1>
+    <p class="lead">Cobra por SPEI o DiMo sin la comisión de la tarjeta. Cada cobro lleva su referencia y, con tu estado de cuenta, sabes en segundos quién ya pagó.</p>
+    <div class="aviso-demo"><span><b>Demo.</b> Usa una CLABE de ejemplo; nada se guarda fuera de tu navegador. CoDi con QR se conecta cuando el banco del negocio lo ofrece.</span></div>
+  </section>
+  <div class="dos">
+    <section class="panel" aria-labelledby="t-crear">
+      <header><p class="ceja">Crear cobro</p><h2 id="t-crear">Datos para tu cliente</h2></header>
+      <div class="campos2">
+        <label for="negocio">Negocio<input id="negocio" value="Café La Muestra"></label>
+        <label for="beneficiario">Beneficiario (como aparece en el banco)<input id="beneficiario" value="Nombre del titular"></label>
+      </div>
+      <label for="clabe">CLABE<input id="clabe" inputmode="numeric" maxlength="22" value="032180000118359719"></label>
+      <p class="sub" id="clabe-estado"></p>
+      <div class="campos2">
+        <label for="monto">Monto (MXN)<input id="monto" type="number" min="1" step="0.01" value="175"></label>
+        <label for="conc">Concepto<input id="conc" value="Pedido LM482"></label>
+      </div>
+      <div class="campos2">
+        <label for="dimo">Celular DiMo (opcional)<input id="dimo" inputmode="tel" placeholder="669 216 6036"></label>
+        <label for="cliente-tel">WhatsApp del cliente<input id="cliente-tel" inputmode="tel" placeholder="669 123 4567"></label>
+      </div>
+      <button class="boton" type="button" id="crear" style="justify-self:start">Crear cobro</button>
+      <p class="error-msj" id="error" role="alert" hidden></p>
+      <div id="creado"></div>
+    </section>
+    <section class="panel" aria-labelledby="t-conciliar">
+      <header><p class="ceja">¿Quién ya pagó?</p><h2 id="t-conciliar">Conciliar con tu banco</h2>
+        <p class="sub">Pega el estado de cuenta en CSV (fecha, descripción, referencia, abono). Hay uno de ejemplo.</p></header>
+      <label for="csv">Movimientos<textarea id="csv" rows="6"></textarea></label>
+      <button class="boton claro" type="button" id="conciliar" style="justify-self:start">Conciliar</button>
+      <div class="tabla-envuelta"><table class="tabla"><thead><tr><th>Cobro</th><th>Concepto</th><th class="num">Monto</th><th>Estado</th></tr></thead><tbody id="cobros"></tbody></table></div>
+      <div id="sin-cobro"></div>
+    </section>
+  </div>
+</main>

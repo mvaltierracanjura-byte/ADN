@@ -1,0 +1,70 @@
+/* Herramientas de ADN: piezas de interfaz comunes (sobre ../estilos.css). */
+.tool-cabeza { padding-block: clamp(32px, 6vw, 64px) 8px; display: grid; gap: 14px; }
+.tool-cabeza h1 { font-size: clamp(1.9rem, 4.4vw, 3rem); }
+.aviso-demo { display: flex; flex-wrap: wrap; gap: 10px 16px; align-items: center; background: color-mix(in srgb, var(--g) 12%, var(--surface)); border: 1px solid color-mix(in srgb, var(--g) 35%, var(--line)); border-radius: 12px; padding: 12px 16px; font-size: 0.95rem; }
+.aviso-demo button { font: 600 0.9rem var(--body); background: transparent; color: var(--ink); border: 1px solid var(--ink); border-radius: 999px; padding: 6px 12px; cursor: pointer; }
+
+.dos { display: grid; grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr); gap: 24px; align-items: start; padding-block: 24px 64px; }
+@media (max-width: 900px) { .dos { grid-template-columns: 1fr; } }
+.panel { background: var(--surface); border: 1px solid var(--line); border-radius: 18px; padding: clamp(18px, 3vw, 28px); display: grid; gap: 18px; min-width: 0; }
+.panel > header { display: grid; gap: 4px; }
+.panel h2 { font-size: 1.25rem; }
+.panel .sub { color: var(--muted); font-size: 0.92rem; }
+.paso { display: grid; gap: 10px; }
+.paso > b { font-size: 0.95rem; }
+
+.chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.chips button, .chip-op { font: 500 0.92rem var(--body); color: var(--ink); background: var(--bg); border: 1px solid var(--line); border-radius: 12px; padding: 9px 12px; cursor: pointer; text-align: left; line-height: 1.25; }
+.chips button small { display: block; color: var(--muted); font-size: 0.8rem; }
+.chips button:hover { border-color: var(--ink); }
+.chips button[aria-pressed="true"] { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+.chips button[aria-pressed="true"] small { color: color-mix(in srgb, var(--bg) 75%, var(--ink)); }
+.chips button:disabled { opacity: 0.45; cursor: not-allowed; }
+.horas { display: grid; grid-template-columns: repeat(auto-fill, minmax(84px, 1fr)); gap: 8px; }
+.horas button { font: 600 0.95rem var(--body); font-variant-numeric: tabular-nums; padding: 10px 6px; border-radius: 10px; border: 1px solid var(--line); background: var(--bg); color: var(--ink); cursor: pointer; }
+.horas button[aria-pressed="true"] { background: var(--t); color: var(--surface); border-color: var(--t); }
+.vacio { color: var(--muted); font-size: 0.95rem; padding: 10px 0; }
+
+.campos2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+@media (max-width: 520px) { .campos2 { grid-template-columns: 1fr; } }
+.panel label { font-size: 0.9rem; font-weight: 600; display: grid; gap: 6px; }
+.panel input, .panel select, .panel textarea { font: 400 1rem var(--body); padding: 11px 12px; border-radius: 10px; border: 1px solid var(--line); background: var(--bg); color: var(--ink); width: 100%; min-width: 0; }
+.panel textarea { min-height: 90px; resize: vertical; }
+.error-msj { color: var(--a); font-weight: 600; font-size: 0.95rem; }
+.ok-msj { background: color-mix(in srgb, var(--t) 12%, var(--surface)); border: 1px solid color-mix(in srgb, var(--t) 40%, var(--line)); border-radius: 12px; padding: 14px 16px; display: grid; gap: 8px; }
+
+.pill { display: inline-block; font: 600 0.74rem var(--body); letter-spacing: 0.02em; padding: 3px 9px; border-radius: 999px; border: 1px solid currentColor; white-space: nowrap; }
+.pill.pendiente { color: var(--g); }
+.pill.confirmada { color: var(--t); }
+.pill.cancelada { color: var(--muted); }
+.pill.asistio { color: var(--c); }
+.pill.no_asistio { color: var(--a); }
+
+.lista-citas { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+.lista-citas li { display: grid; grid-template-columns: 64px minmax(0, 1fr); gap: 12px; padding: 12px 14px; border: 1px solid var(--line); border-radius: 12px; background: var(--bg); }
+.lista-citas .hora { font: 700 1rem var(--body); font-variant-numeric: tabular-nums; }
+.lista-citas .quien { display: flex; flex-wrap: wrap; gap: 6px 10px; align-items: center; }
+.lista-citas .det { color: var(--muted); font-size: 0.9rem; }
+.acciones-mini { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+.acciones-mini button, .acciones-mini a { font: 600 0.82rem var(--body); padding: 6px 10px; border-radius: 999px; border: 1px solid var(--line); background: var(--surface); color: var(--ink); cursor: pointer; text-decoration: none; }
+.acciones-mini button:hover, .acciones-mini a:hover { border-color: var(--ink); }
+.acciones-mini .wa { border-color: var(--wa); color: var(--wa); }
+
+.kpis { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
+.kpis div { border: 1px solid var(--line); border-radius: 12px; padding: 12px; display: grid; gap: 2px; }
+.kpis b { font: 700 1.5rem var(--display); font-variant-numeric: tabular-nums; }
+.kpis span { color: var(--muted); font-size: 0.82rem; }
+
+.tabla-envuelta { overflow-x: auto; border: 1px solid var(--line); border-radius: 12px; }
+table.tabla { border-collapse: collapse; width: 100%; font-size: 0.93rem; }
+.tabla th, .tabla td { padding: 9px 12px; text-align: left; border-bottom: 1px solid var(--line); white-space: nowrap; }
+.tabla th { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--muted); background: var(--bg); }
+.tabla td.num, .tabla th.num { text-align: right; font-variant-numeric: tabular-nums; }
+.tabla tr:last-child td { border-bottom: 0; }
+
+.mensaje-wa { white-space: pre-wrap; background: var(--bg); border: 1px dashed var(--line); border-radius: 12px; padding: 12px 14px; font-size: 0.93rem; overflow-wrap: anywhere; }
+.catalogo { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr)); gap: 16px; padding-block: 16px 64px; }
+.catalogo a { text-decoration: none; }
+.catalogo .tarjeta { height: 100%; align-content: start; }
+.catalogo .tarjeta:hover { border-color: var(--ink); }
+.catalogo .tarjeta h3 { font-size: 1.1rem; }

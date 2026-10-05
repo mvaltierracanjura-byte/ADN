@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="es">
+<head>
+<!-- Generado por scripts/herramientas.mjs. Edita herramientas/src/. -->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Aviso de privacidad · ADN</title>
+<meta name="description" content="Genera el aviso de privacidad de tu negocio según la ley de datos personales de 2025.">
+<link rel="canonical" href="https://adn-mazatlan.netlify.app/herramientas/aviso.html">
+<meta property="og:title" content="Aviso de privacidad · ADN">
+<meta property="og:description" content="Genera el aviso de privacidad de tu negocio según la ley de datos personales de 2025.">
+<meta property="og:image" content="https://adn-mazatlan.netlify.app/img/og.png">
+<meta name="theme-color" content="#13211e">
+<link rel="icon" href="../img/icono.svg" type="image/svg+xml">
+<link rel="preload" href="../fuentes/unbounded.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="../estilos.css">
+<link rel="stylesheet" href="herramientas.css">
+</head>
+<body data-raiz="../">
+<a class="saltar" href="#contenido">Saltar al contenido</a>
+<header class="nav">
+  <div class="envoltura">
+    <a class="marca" href="../" aria-label="ADN, inicio"><svg viewBox="0 0 26 26" aria-hidden="true"><path d="M6 2c0 8 14 8 14 11S6 16 6 24" fill="none" stroke="var(--t)" stroke-width="2.6" stroke-linecap="round"/><path d="M20 2c0 8-14 8-14 11s14 3 14 11" fill="none" stroke="var(--a)" stroke-width="2.6" stroke-linecap="round"/></svg>ADN</a>
+    <div class="nav-der"><a class="idioma" href="./">Herramientas</a><a class="boton wa" data-wa="Hola, ADN. Probé el generador de aviso de privacidad y quiero algo así para mi negocio.">WhatsApp</a></div>
+  </div>
+</header>
+<main id="contenido" class="envoltura">
+  <section class="tool-cabeza" style="padding-block-end:0">
+    <p class="ceja">Herramienta · Controlar</p>
+    <h1>Aviso de privacidad</h1>
+    <p class="lead">La ley de datos personales de 2025 obliga a todo negocio que pide datos a sus clientes, sin importar su tamaño. Llena esto y obtén una base para tu aviso.</p>
+    <div class="aviso-demo"><span>Es un punto de partida, no asesoría legal. Si tratas datos de salud, pide a un abogado que lo revise.</span></div>
+  </section>
+  <div class="dos">
+    <section class="panel" aria-labelledby="t-datos">
+      <header><p class="ceja">Tus datos</p><h2 id="t-datos">Responsable</h2></header>
+      <div class="campos2">
+        <label for="responsable">Nombre o razón social<input id="responsable" value="Ana López Pérez"></label>
+        <label for="comercial">Nombre comercial<input id="comercial" value="Consultorio Sonrisa"></label>
+      </div>
+      <label for="domicilio">Domicilio<input id="domicilio" value="Av. Del Mar 100, Col. Centro, 82000 Mazatlán, Sinaloa"></label>
+      <div class="campos2">
+        <label for="correo">Correo de privacidad<input id="correo" value="privacidad@ejemplo.mx"></label>
+        <label for="telefono">Teléfono<input id="telefono" value="669 000 0000"></label>
+      </div>
+      <div class="paso"><b>Datos que pides</b><div id="datos"></div></div>
+      <label for="finalidades">¿Para qué los usas? (uno por renglón)<textarea id="finalidades">Agendar y recordarte tus citas
+Darte el servicio que contrataste
+Facturar cuando lo pidas</textarea></label>
+      <label for="secundarias">Usos adicionales que el cliente puede rechazar<textarea id="secundarias">Mandarte promociones y novedades</textarea></label>
+      <label for="comparte">Con quién los compartes (proveedores)<textarea id="comparte">Proveedor de facturación electrónica
+WhatsApp (Meta) para mandarte mensajes</textarea></label>
+    </section>
+    <section class="panel" aria-labelledby="t-aviso">
+      <header><p class="ceja">Resultado</p><h2 id="t-aviso">Tu aviso</h2></header>
+      <textarea id="aviso" rows="24" readonly style="font-size:.9rem"></textarea>
+      <div class="acciones-mini"><button type="button" id="copiar">Copiar aviso</button></div>
+      <b>Versión corta (junto a tus formularios)</b>
+      <div class="mensaje-wa" id="corto"></div>
+    </section>
+  </div>
+</main>
+<footer>
+  <div class="envoltura"><span>ADN · Mazatlán, Sinaloa</span><nav aria-label="Pie de página"><a href="../">Inicio</a><a href="./">Todas las herramientas</a><a href="../privacidad.html">Aviso de privacidad</a></nav></div>
+</footer>
+<script src="../datos.js"></script>
+<script type="module" src="../adn.js"></script>
+<script type="module" src="aviso.js"></script>
+</body>
+</html>

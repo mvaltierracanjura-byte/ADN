@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="es">
+<head>
+<!-- Generado por scripts/herramientas.mjs. Edita herramientas/src/. -->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Diagnóstico de tu negocio · ADN</title>
+<meta name="description" content="Contesta 8 preguntas y te decimos por dónde empezar, con números de tu propio negocio.">
+<link rel="canonical" href="https://adn-mazatlan.netlify.app/herramientas/diagnostico.html">
+<meta property="og:title" content="Diagnóstico de tu negocio · ADN">
+<meta property="og:description" content="Contesta 8 preguntas y te decimos por dónde empezar, con números de tu propio negocio.">
+<meta property="og:image" content="https://adn-mazatlan.netlify.app/img/og.png">
+<meta name="theme-color" content="#13211e">
+<link rel="icon" href="../img/icono.svg" type="image/svg+xml">
+<link rel="preload" href="../fuentes/unbounded.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="../estilos.css">
+<link rel="stylesheet" href="herramientas.css">
+</head>
+<body data-raiz="../">
+<a class="saltar" href="#contenido">Saltar al contenido</a>
+<header class="nav">
+  <div class="envoltura">
+    <a class="marca" href="../" aria-label="ADN, inicio"><svg viewBox="0 0 26 26" aria-hidden="true"><path d="M6 2c0 8 14 8 14 11S6 16 6 24" fill="none" stroke="var(--t)" stroke-width="2.6" stroke-linecap="round"/><path d="M20 2c0 8-14 8-14 11s14 3 14 11" fill="none" stroke="var(--a)" stroke-width="2.6" stroke-linecap="round"/></svg>ADN</a>
+    <div class="nav-der"><a class="idioma" href="./">Herramientas</a><a class="boton wa" data-wa="Hola, ADN. Probé el diagnóstico y quiero algo así para mi negocio.">WhatsApp</a></div>
+  </div>
+</header>
+<main id="contenido" class="envoltura">
+  <section class="tool-cabeza" style="padding-block-end:0">
+    <p class="ceja">Diagnóstico gratuito</p>
+    <h1>¿Por dónde empiezo?</h1>
+    <p class="lead">Contesta 8 preguntas con los números de tu negocio. Te decimos cuánto se te puede estar yendo al mes y qué herramienta te conviene primero. No pedimos datos personales.</p>
+  </section>
+  <div class="dos">
+    <form class="panel" id="preguntas" novalidate aria-labelledby="t-preg">
+      <header><p class="ceja">Tu negocio</p><h2 id="t-preg">8 preguntas</h2></header>
+      <div class="campos2">
+        <label for="negocio">Nombre del negocio (opcional)<input id="negocio"></label>
+        <label for="giro">1. Giro<select id="giro"></select></label>
+      </div>
+      <div class="campos2">
+        <label for="mensajes">2. Mensajes de WhatsApp o Instagram al día<input id="mensajes" type="number" min="0" value="25"></label>
+        <label for="responde">3. ¿Qué tan rápido contestas?<select id="responde"><option value="minutos">En minutos</option><option value="horas" selected>En horas</option><option value="dia">Al otro día o más</option></select></label>
+      </div>
+      <div class="campos2">
+        <label for="ticket">4. ¿Cuánto vale una venta o cita promedio? (MXN)<input id="ticket" type="number" min="0" value="250"></label>
+        <label for="llamadas">5. Llamadas que no alcanzas a contestar al día<input id="llamadas" type="number" min="0" value="2"></label>
+      </div>
+      <div class="campos2">
+        <label for="citas">6. ¿Trabajas con citas o reservaciones?<select id="citas"><option value="no">No</option><option value="si">Sí</option></select></label>
+        <label for="google">7. ¿Estás en Google?<select id="google"><option value="no">No tengo perfil</option><option value="si_sin_resenas" selected>Sí, con pocas reseñas</option><option value="si">Sí, con muchas reseñas y las contesto</option></select></label>
+      </div>
+      <div class="campos2" id="bloque-citas" hidden>
+        <label for="citas-semana">Citas por semana<input id="citas-semana" type="number" min="0" value="60"></label>
+        <label for="inasist">% que no llega<input id="inasist" type="number" min="0" max="100" value="20"></label>
+      </div>
+      <div class="campos2">
+        <label for="cobro">8. ¿Cómo te pagan casi siempre?<select id="cobro"><option value="efectivo">Efectivo</option><option value="tarjeta" selected>Terminal de tarjeta</option><option value="transferencia">Transferencia</option></select></label>
+        <label class="casilla" for="factura" style="align-self:end"><input type="checkbox" id="factura"><span>Hago facturas a mano</span></label>
+      </div>
+    </form>
+    <section class="panel" aria-labelledby="t-res" aria-live="polite">
+      <header><p class="ceja">Resultado</p><h2 id="t-res">Tu diagnóstico</h2></header>
+      <div id="resultado"></div>
+    </section>
+  </div>
+</main>
+<footer>
+  <div class="envoltura"><span>ADN · Mazatlán, Sinaloa</span><nav aria-label="Pie de página"><a href="../">Inicio</a><a href="./">Todas las herramientas</a><a href="../privacidad.html">Aviso de privacidad</a></nav></div>
+</footer>
+<script src="../datos.js"></script>
+<script type="module" src="../adn.js"></script>
+<script type="module" src="diagnostico.js"></script>
+</body>
+</html>

@@ -1,0 +1,182 @@
+// Genera giros/<id>.html y sitemap.xml a partir de datos.js.
+// Correr después de cambiar giros, bases o contacto:  node scripts/giros.mjs
+import { createRequire } from "node:module";
+import { writeFileSync, mkdirSync } from "node:fs";
+import { dirname, join } from "node:path";
+import { fileURLToPath } from "node:url";
+
+const raiz = join(dirname(fileURLToPath(import.meta.url)), "..");
+const ADN = createRequire(import.meta.url)(join(raiz, "datos.js"));
+const SITIO = ADN.contacto.sitio.replace(/\/$/, "");
+const COLOR = { A: "var(--a)", T: "var(--t)", C: "var(--c)", G: "var(--g)" };
+const BASE = Object.fromEntries(ADN.bases.map((b) => [b.letra, b.nombre]));
+const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]);
+const WA_SVG = `<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.2-.4.7-1.4.1-.2 0-.3 0-.5l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.2.7.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.3-.2-.5-.3Z"/></svg>`;
+
+function pagina(g) {
+  const titulo = `${g.nombre} en Mazatlán: WhatsApp con IA, citas y cobro · ADN`;
+  const desc = `${g.dolor} ADN construye las herramientas para resolverlo: ${g.hace.map((h) => h[1].replace(/\.$/, "").toLowerCase()).slice(0, 2).join("; ")}.`;
+  const url = `${SITIO}/giros/${g.id}.html`;
+  const msg = `Hola, ADN. Tengo un negocio de ${g.corto.toLowerCase()} y quiero ver qué podemos hacer.`;
+  const ld = {
+    "@context": "https://schema.org", "@type": "Service",
+    name: `Herramientas digitales para ${g.nombre.toLowerCase()}`,
+    serviceType: g.hace.map((h) => h[1]),
+    areaServed: { "@type": "City", name: "Mazatlán" },
+    provider: { "@type": "ProfessionalService", name: "ADN", url: SITIO + "/", telephone: "+52 " + ADN.contacto.whatsappTexto },
+    url,
+  };
+  const otros = ADN.giros.filter((x) => x.id !== g.id).map((x) => `<li><a href="${x.id}.html">${esc(x.nombre)}</a></li>`).join("");
+  return `<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<!-- Generado por scripts/giros.mjs a partir de datos.js. No editar a mano. -->
+<title>${esc(titulo)}</title>
+<meta name="description" content="${esc(desc)}">
+<link rel="canonical" href="${url}">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="es_MX">
+<meta property="og:site_name" content="ADN">
+<meta property="og:title" content="${esc(g.nombre)}: lo que ADN puede construir para tu negocio">
+<meta property="og:description" content="${esc(g.dolor)}">
+<meta property="og:url" content="${url}">
+<meta property="og:image" content="${SITIO}/img/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#13211e">
+<link rel="icon" href="../img/icono.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="../img/icono-180.png">
+<link rel="preload" href="../fuentes/unbounded.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="../estilos.css">
+<script type="application/ld+json">
+${JSON.stringify(ld, null, 2)}
+</script>
+</head>
+<body data-raiz="../" data-giro="${g.id}">
+<a class="saltar" href="#contenido">Saltar al contenido</a>
+<header class="nav">
+  <div class="envoltura">
+    <a class="marca" href="../" aria-label="ADN, inicio">
+      <svg viewBox="0 0 26 26" aria-hidden="true"><path d="M6 2c0 8 14 8 14 11S6 16 6 24" fill="none" stroke="var(--t)" stroke-width="2.6" stroke-linecap="round"/><path d="M20 2c0 8-14 8-14 11s14 3 14 11" fill="none" stroke="var(--a)" stroke-width="2.6" stroke-linecap="round"/></svg>
+      ADN
+    </a>
+    <ul class="menu" id="menu">
+      <li><a href="../#somos">Quiénes somos</a></li>
+      <li><a href="../#ofrecemos">Qué ofrecemos</a></li>
+      <li><a href="../#demo">Pruébalo</a></li>
+      <li><a href="../#giros" aria-current="page">Para tu giro</a></li>
+      <li><a href="../herramientas/">Herramientas</a></li>
+      <li><a href="#contacto">Contacto</a></li>
+    </ul>
+    <div class="nav-der">
+      <a class="boton wa" data-wa="${esc(msg)}">WhatsApp</a>
+      <button class="abrir-menu" type="button" aria-controls="menu" aria-expanded="false" aria-label="Abrir menú">☰</button>
+    </div>
+  </div>
+</header>
+
+<main id="contenido">
+  <section class="pagina">
+    <div class="envoltura">
+      <p class="miga"><a href="../">ADN</a> / <a href="../#giros">Para tu giro</a> / ${esc(g.nombre)}</p>
+      <div class="caso">
+        <div class="texto">
+          <p class="ceja">Para ${esc(g.corto.toLowerCase())} en Mazatlán</p>
+          <h1 style="font-size:clamp(2rem,4.6vw,3.2rem)">${esc(g.nombre)}</h1>
+          <p class="lead">${esc(g.dolor)}</p>
+          <div class="acciones">
+            <a class="boton wa" data-wa="${esc(msg)}">${WA_SVG}Platiquemos por WhatsApp</a>
+            <a class="boton claro" href="../herramientas/diagnostico.html">Haz el diagnóstico</a>
+          </div>
+        </div>
+        <div class="ficha">
+          <p class="ceja">Lo que construiríamos</p>
+          <ul class="lista-hace">
+            ${g.hace.map(([b, t]) => `<li><span class="chip" style="--col:${COLOR[b]}" title="${esc(BASE[b])}">${b}</span><span>${esc(t)}</span></li>`).join("\n            ")}
+          </ul>
+          <p class="dato">${esc(g.dato)}${g.fuente ? ` Fuente: <a href="${g.fuente[1]}" target="_blank" rel="noopener">${esc(g.fuente[0])}</a>.` : ""}</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="franja">
+    <div class="envoltura">
+      <div class="cabeza">
+        <p class="ceja">Cómo trabajamos</p>
+        <h2>Empezamos por lo que más te duele.</h2>
+        <p class="lead">No tienes que contratar todo. Elegimos juntos la primera herramienta, la usas desde la primera semana y sumamos lo demás cuando veas resultados. Cada etapa lleva su precio cerrado antes de empezar.</p>
+      </div>
+      <ol class="pasos">
+        <li><h3>Escuchar</h3><p>Vemos cómo atiendes hoy y dónde se pierden ventas o tiempo.</p></li>
+        <li><h3>Proponer</h3><p>Qué construir primero, por qué y cuánto cuesta.</p></li>
+        <li><h3>Construir</h3><p>Etapas cortas, con pruebas, a tu nombre.</p></li>
+        <li><h3>Medir y ajustar</h3><p>Números reales; lo que no sirve se quita.</p></li>
+      </ol>${g.caso ? `
+      <div class="tarjeta" style="margin-top:32px">
+        <p class="ceja">Caso real</p>
+        <h3>Osako Coffee, Mazatlán</h3>
+        <p>Página de pedidos, pantalla de barra con alertas a los 10 minutos, cobro en la página, envío por colonia, tarjeta de sellos y asistente de WhatsApp. <a href="../#osako">Ver el caso</a>.</p>
+      </div>` : ""}
+    </div>
+  </section>
+
+  <section class="franja">
+    <div class="envoltura">
+      <div class="cabeza"><p class="ceja">Otros giros</p><h2>También trabajamos con</h2></div>
+      <ul class="otros-giros">${otros}</ul>
+    </div>
+  </section>
+
+  <section id="contacto">
+    <div class="envoltura">
+      <div class="contacto">
+        <div style="display:grid;gap:16px;align-content:start">
+          <p class="ceja">Contacto</p>
+          <h2>Cuéntanos de tu negocio.</h2>
+          <p class="lead">Armamos el mensaje para mandarlo por WhatsApp. Te respondemos con una primera idea de qué construir.</p>
+          <p class="datos-contacto"><span>WhatsApp: <b data-tel>${esc(ADN.contacto.whatsappTexto)}</b></span><span>Correo: <b data-correo>${esc(ADN.contacto.correo)}</b></span></p>
+        </div>
+        <form id="forma" novalidate>
+          <label for="nombre">Tu nombre<input id="nombre" name="nombre" autocomplete="name"></label>
+          <label for="negocio">Nombre del negocio<input id="negocio" name="negocio" autocomplete="organization"></label>
+          <label for="giro">Giro<select id="giro" name="giro"></select></label>
+          <label for="necesidad">¿Qué te gustaría resolver?<textarea id="necesidad" name="necesidad"></textarea></label>
+          <label class="casilla" for="acepto"><input type="checkbox" id="acepto" name="acepto"><span>Leí el <a href="../privacidad.html">aviso de privacidad</a>. Usaremos tus datos solo para contestarte.</span></label>
+          <button class="boton" type="submit" style="justify-self:start">Preparar mensaje</button>
+          <p class="aviso" id="aviso" role="status" hidden></p>
+          <div class="mensaje" id="mensaje" hidden></div>
+          <div class="acciones" id="enviar" hidden style="margin-top:0"></div>
+        </form>
+      </div>
+    </div>
+  </section>
+</main>
+
+<a class="wa-flotante" data-wa="${esc(msg)}" aria-label="Escríbenos por WhatsApp">${WA_SVG}WhatsApp</a>
+
+<footer>
+  <div class="envoltura">
+    <span>ADN · Mazatlán, Sinaloa · 2026</span>
+    <nav aria-label="Pie de página"><a href="../">Inicio</a><a href="../privacidad.html">Aviso de privacidad</a><a href="../en/" hreflang="en" lang="en">English</a></nav>
+  </div>
+</footer>
+<script src="../datos.js"></script>
+<script type="module" src="../adn.js"></script>
+</body>
+</html>
+`;
+}
+
+mkdirSync(join(raiz, "giros"), { recursive: true });
+for (const g of ADN.giros) writeFileSync(join(raiz, "giros", `${g.id}.html`), pagina(g));
+
+const hoy = new Date().toISOString().slice(0, 10);
+const HERRAMIENTAS = ["", "diagnostico.html", "agenda.html", "bandeja.html", "resenas.html", "cobro.html", "factura.html", "pronostico.html", "contenido.html", "google.html", "aviso.html"];
+const urls = ["/", "/en/", "/privacidad.html", ...ADN.giros.map((g) => `/giros/${g.id}.html`), ...HERRAMIENTAS.map((h) => `/herramientas/${h}`)];
+writeFileSync(join(raiz, "sitemap.xml"),
+  `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n` +
+  urls.map((u) => `  <url><loc>${SITIO}${u}</loc><lastmod>${hoy}</lastmod></url>`).join("\n") + `\n</urlset>\n`);
+writeFileSync(join(raiz, "robots.txt"), `User-agent: *\nAllow: /\n\nSitemap: ${SITIO}/sitemap.xml\n`);
+console.log(`${ADN.giros.length} páginas de giro, sitemap.xml y robots.txt listos.`);

@@ -1,0 +1,27 @@
+<main id="contenido" class="envoltura">
+  <section class="tool-cabeza" style="padding-block-end:0">
+    <p class="ceja">Herramienta · Controlar</p>
+    <h1>Cuánto preparar mañana</h1>
+    <p class="lead">Con tus ventas por día te decimos cuántas piezas de cada producto preparar, según el día de la semana, la tendencia y el clima. Menos producto tirado, menos “se nos acabó”.</p>
+  </section>
+  <div class="dos">
+    <section class="panel" aria-labelledby="t-datos">
+      <header><p class="ceja">Tus datos</p><h2 id="t-datos">Ventas y condiciones</h2>
+        <p class="sub">Usamos 10 semanas de ventas de ejemplo de una cafetería. Puedes subir las tuyas en CSV con columnas fecha, producto y cantidad.</p></header>
+      <label for="archivo">Subir CSV de ventas<input id="archivo" type="file" accept=".csv,text/csv"></label>
+      <p class="sub" id="datos-estado"></p>
+      <label for="fecha">Día a pronosticar<input id="fecha" type="date"></label>
+      <div class="chips" role="group" aria-label="Condiciones del día">
+        <button type="button" aria-pressed="false" data-ajuste="calor">Día de calor<small>frappés +30%</small></button>
+        <button type="button" aria-pressed="false" data-ajuste="lluvia">Lluvia<small>todo −15%</small></button>
+        <button type="button" aria-pressed="false" data-ajuste="evento">Evento o quincena<small>todo +20%</small></button>
+      </div>
+      <label for="colchon">Colchón de seguridad<span class="fila" style="display:flex;gap:12px;align-items:center"><input id="colchon" type="range" min="0" max="30" value="10" style="flex:1"><output id="colchon-o">10%</output></span></label>
+    </section>
+    <section class="panel" aria-labelledby="t-res">
+      <header><p class="ceja">Resultado</p><h2 id="t-res">Para preparar</h2></header>
+      <div class="tabla-envuelta"><table class="tabla"><thead><tr><th>Producto</th><th class="num">Se venderán</th><th class="num">Rango normal</th><th class="num">Preparar</th></tr></thead><tbody id="tabla"></tbody></table></div>
+      <p class="sub" id="evaluacion"></p>
+    </section>
+  </div>
+</main>

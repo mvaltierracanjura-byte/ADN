@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="es">
+<head>
+<!-- Generado por scripts/herramientas.mjs. Edita herramientas/src/. -->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Autofactura · ADN</title>
+<meta name="description" content="Tu cliente se factura solo: valida RFC, régimen fiscal, código postal y uso de CFDI antes de timbrar.">
+<link rel="canonical" href="https://adn-mazatlan.netlify.app/herramientas/factura.html">
+<meta property="og:title" content="Autofactura · ADN">
+<meta property="og:description" content="Tu cliente se factura solo: valida RFC, régimen fiscal, código postal y uso de CFDI antes de timbrar.">
+<meta property="og:image" content="https://adn-mazatlan.netlify.app/img/og.png">
+<meta name="theme-color" content="#13211e">
+<link rel="icon" href="../img/icono.svg" type="image/svg+xml">
+<link rel="preload" href="../fuentes/unbounded.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="../estilos.css">
+<link rel="stylesheet" href="herramientas.css">
+</head>
+<body data-raiz="../">
+<a class="saltar" href="#contenido">Saltar al contenido</a>
+<header class="nav">
+  <div class="envoltura">
+    <a class="marca" href="../" aria-label="ADN, inicio"><svg viewBox="0 0 26 26" aria-hidden="true"><path d="M6 2c0 8 14 8 14 11S6 16 6 24" fill="none" stroke="var(--t)" stroke-width="2.6" stroke-linecap="round"/><path d="M20 2c0 8-14 8-14 11s14 3 14 11" fill="none" stroke="var(--a)" stroke-width="2.6" stroke-linecap="round"/></svg>ADN</a>
+    <div class="nav-der"><a class="idioma" href="./">Herramientas</a><a class="boton wa" data-wa="Hola, ADN. Probé la autofactura y quiero algo así para mi negocio.">WhatsApp</a></div>
+  </div>
+</header>
+<main id="contenido" class="envoltura">
+  <section class="tool-cabeza" style="padding-block-end:0">
+    <p class="ceja">Herramienta · Tomar y cobrar</p>
+    <h1>Autofactura</h1>
+    <p class="lead">Tu cliente se factura solo con su folio y sus datos fiscales. Revisamos el RFC, el régimen, el código postal y el uso de CFDI antes de timbrar, para que no te rebote el SAT.</p>
+    <div class="aviso-demo"><span><b>Demo.</b> Folios de ejemplo: <b>LM482</b>, <b>LM483</b>. RFC de prueba del SAT: <b>EKU9003173C9</b>, CP 26015, régimen 601. Aquí no se timbra nada.</span></div>
+  </section>
+  <div class="dos">
+    <section class="panel" aria-labelledby="t-datos">
+      <header><p class="ceja">Lo que ve tu cliente</p><h2 id="t-datos">Factura tu compra</h2></header>
+      <div class="campos2">
+        <label for="folio">Folio del ticket<input id="folio" value="LM482" autocomplete="off"></label>
+        <label for="total">Total pagado<input id="total" inputmode="decimal" value="175"></label>
+      </div>
+      <p class="sub" id="ticket-estado"></p>
+      <label for="rfc">RFC<input id="rfc" autocomplete="off" style="text-transform:uppercase"></label>
+      <p class="sub" id="rfc-estado"></p>
+      <label for="nombre">Nombre o razón social (como en tu constancia)<input id="nombre"></label>
+      <div class="campos2">
+        <label for="cp">Código postal fiscal<input id="cp" inputmode="numeric" maxlength="5"></label>
+        <label for="correo">Correo para recibirla<input id="correo" type="email" autocomplete="email"></label>
+      </div>
+      <label for="regimen">Régimen fiscal<select id="regimen"></select></label>
+      <label for="uso">Uso del CFDI<select id="uso"></select></label>
+      <button class="boton" type="button" id="facturar" style="justify-self:start">Revisar y facturar</button>
+      <div id="errores" role="alert"></div>
+    </section>
+    <section class="panel" aria-labelledby="t-resultado">
+      <header><p class="ceja">Lo que se manda a timbrar</p><h2 id="t-resultado">Vista previa</h2></header>
+      <div id="vista"><p class="vacio">Llena los datos y toca “Revisar y facturar”.</p></div>
+    </section>
+  </div>
+</main>
+<footer>
+  <div class="envoltura"><span>ADN · Mazatlán, Sinaloa</span><nav aria-label="Pie de página"><a href="../">Inicio</a><a href="./">Todas las herramientas</a><a href="../privacidad.html">Aviso de privacidad</a></nav></div>
+</footer>
+<script src="../datos.js"></script>
+<script type="module" src="../adn.js"></script>
+<script type="module" src="factura.js"></script>
+</body>
+</html>

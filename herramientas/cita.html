@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Tu cita</title>
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#13211e">
+<link rel="icon" href="../img/icono.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../estilos.css">
+<link rel="stylesheet" href="herramientas.css">
+</head>
+<body>
+<main id="contenido" class="envoltura" style="max-width:560px;padding-block:32px 64px">
+  <section class="panel" aria-live="polite">
+    <header><p class="ceja" id="negocio">Tu cita</p><h1 style="font-size:1.6rem" id="titulo">Cargando…</h1></header>
+    <div id="detalle"></div>
+    <div class="acciones-mini" id="acciones" hidden>
+      <button type="button" id="confirmar">Confirmar que voy</button>
+      <button type="button" id="cambiar">Cambiar día u hora</button>
+      <button type="button" id="cancelar">Cancelar cita</button>
+    </div>
+    <div id="cambio" class="paso" hidden>
+      <b>Elige otro día</b><div class="chips" id="dias"></div>
+      <b>y otra hora</b><div class="horas" id="horas"></div>
+    </div>
+    <div id="seguro" class="ok-msj" hidden>
+      <span>¿Seguro que quieres cancelar? El horario se le dará a alguien más.</span>
+      <div class="acciones-mini"><button type="button" id="si-cancelar">Sí, cancelar</button><button type="button" id="no-cancelar">No, la conservo</button></div>
+    </div>
+    <p class="error-msj" id="error" role="alert" hidden></p>
+  </section>
+  <p class="sub" style="margin-top:16px;color:var(--muted);font-size:.85rem">Agenda hecha por <a href="../">ADN</a>.</p>
+</main>
+<script type="module" src="cita.js"></script>
+</body>
+</html>

@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Agenda con recordatorios · ADN</title>
+<meta name="description" content="Agenda en línea con horarios reales, recordatorio por WhatsApp y enlace para confirmar, cambiar o cancelar. Pruébala con un consultorio de ejemplo.">
+<link rel="canonical" href="https://adn-mazatlan.netlify.app/herramientas/agenda.html">
+<meta property="og:title" content="Agenda con recordatorios por WhatsApp · ADN">
+<meta property="og:image" content="https://adn-mazatlan.netlify.app/img/og.png">
+<meta name="theme-color" content="#13211e">
+<link rel="icon" href="../img/icono.svg" type="image/svg+xml">
+<link rel="preload" href="../fuentes/unbounded.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="../estilos.css">
+<link rel="stylesheet" href="herramientas.css">
+</head>
+<body data-raiz="../">
+<a class="saltar" href="#contenido">Saltar al contenido</a>
+<header class="nav">
+  <div class="envoltura">
+    <a class="marca" href="../" aria-label="ADN, inicio"><svg viewBox="0 0 26 26" aria-hidden="true"><path d="M6 2c0 8 14 8 14 11S6 16 6 24" fill="none" stroke="var(--t)" stroke-width="2.6" stroke-linecap="round"/><path d="M20 2c0 8-14 8-14 11s14 3 14 11" fill="none" stroke="var(--a)" stroke-width="2.6" stroke-linecap="round"/></svg>ADN</a>
+    <div class="nav-der"><a class="idioma" href="./">Herramientas</a><a class="boton wa" data-wa="Hola, ADN. Probé la agenda con recordatorios y quiero una para mi negocio.">WhatsApp</a></div>
+  </div>
+</header>
+
+<main id="contenido" class="envoltura">
+  <section class="tool-cabeza" style="padding-block-end:0">
+    <p class="ceja">Herramienta · Controlar</p>
+    <h1>Agenda con recordatorios</h1>
+    <p class="lead">Tu cliente aparta en horarios que de verdad están libres. Un día antes le llega un WhatsApp para confirmar, cambiar o cancelar. Tú ves el día completo y cuántos no llegan.</p>
+    <div class="aviso-demo" id="aviso-demo" hidden>
+      <span><b>Demo con un consultorio de ejemplo.</b> Lo que reserves aquí se guarda solo en tu navegador.</span>
+      <button type="button" id="reiniciar">Reiniciar demo</button>
+    </div>
+  </section>
+
+  <div class="dos">
+    <section class="panel" aria-labelledby="t-cliente">
+      <header><p class="ceja">Lo que ve tu cliente</p><h2 id="t-cliente">Aparta tu cita</h2></header>
+      <div class="paso"><b>1. Servicio</b><div class="chips" id="servicios"></div></div>
+      <div class="paso"><b>2. Con quién</b><div class="chips" id="personas"></div></div>
+      <div class="paso"><b>3. Día</b><div class="chips" id="dias"></div></div>
+      <div class="paso"><b>4. Hora</b><div class="horas" id="horas"></div></div>
+      <form id="forma-cita" class="paso" novalidate>
+        <b>5. Tus datos</b>
+        <div class="campos2">
+          <label for="c-nombre">Nombre<input id="c-nombre" autocomplete="name"></label>
+          <label for="c-tel">WhatsApp (10 dígitos)<input id="c-tel" inputmode="tel" autocomplete="tel" placeholder="669 123 4567"></label>
+        </div>
+        <button class="boton" type="submit" style="justify-self:start">Apartar cita</button>
+        <p class="error-msj" id="c-error" role="alert" hidden></p>
+      </form>
+      <div class="ok-msj" id="c-ok" hidden></div>
+    </section>
+
+    <section class="panel" aria-labelledby="t-negocio">
+      <header><p class="ceja">Lo que ve tu recepción</p><h2 id="t-negocio">Agenda del día</h2></header>
+      <div class="kpis" id="kpis"></div>
+      <div class="chips" id="dias-negocio"></div>
+      <div id="por-recordar"></div>
+      <ul class="lista-citas" id="citas" aria-live="polite"></ul>
+    </section>
+  </div>
+</main>
+
+<footer>
+  <div class="envoltura"><span>ADN · Mazatlán, Sinaloa</span><nav aria-label="Pie de página"><a href="../">Inicio</a><a href="./">Todas las herramientas</a><a href="../privacidad.html">Aviso de privacidad</a></nav></div>
+</footer>
+<script src="../datos.js"></script>
+<script type="module" src="../adn.js"></script>
+<script type="module" src="agenda.js"></script>
+</body>
+</html>

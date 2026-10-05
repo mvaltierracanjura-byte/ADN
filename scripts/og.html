@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="es"><head><meta charset="utf-8">
+<!-- Plantilla de img/og.png (vista previa al compartir). La toma scripts/imagenes.mjs. -->
+
+<style>
+  @font-face { font-family: Unbounded; src: url("../fuentes/unbounded.woff2"); font-weight: 200 900; }
+  @font-face { font-family: Figtree; src: url("../fuentes/figtree.woff2"); font-weight: 300 900; }
+  body { margin: 0; width: 1200px; height: 630px; background: #13211e; color: #e6eeeb; font-family: Figtree, sans-serif; display: grid; grid-template-columns: 1fr 360px; overflow: hidden; }
+  .izq { padding: 70px 0 60px 80px; display: flex; flex-direction: column; justify-content: space-between; }
+  .marca { font: 700 44px Unbounded, sans-serif; display: flex; align-items: center; gap: 18px; }
+  h1 { font: 700 64px/1.08 Unbounded, sans-serif; margin: 0; letter-spacing: -0.01em; }
+  h1 span { color: #4fbca7; }
+  p { margin: 0; font-size: 28px; color: #94a6a1; }
+  .bases { font: 600 26px Figtree, sans-serif; letter-spacing: .02em; }
+  .bases b:nth-child(1){color:#ec8661}.bases b:nth-child(2){color:#4fbca7}.bases b:nth-child(3){color:#8aa2ee}.bases b:nth-child(4){color:#dcb150}
+</style></head>
+<body>
+  <div class="izq">
+    <div class="marca"><svg width="48" height="48" viewBox="0 0 26 26"><path d="M6 2c0 8 14 8 14 11S6 16 6 24" fill="none" stroke="#4fbca7" stroke-width="2.6" stroke-linecap="round"/><path d="M20 2c0 8-14 8-14 11s14 3 14 11" fill="none" stroke="#ec8661" stroke-width="2.6" stroke-linecap="round"/></svg>ADN</div>
+    <div style="display:grid;gap:22px">
+      <h1>Le damos a tu negocio su <span>ADN</span> digital.</h1>
+      <p>Estudio digital en Mazatlán · WhatsApp con IA, pedidos, cobro, citas y lealtad</p>
+    </div>
+    <p class="bases"><b>A</b>tender · <b>T</b>omar y cobrar · <b>C</b>ontrolar · <b>G</b>anar clientes</p>
+  </div>
+  <canvas id="h" width="360" height="630"></canvas>
+  <script>
+    const c = document.getElementById("h").getContext("2d"), col = ["#ec8661","#4fbca7","#8aa2ee","#dcb150"];
+    const pares = 28, amp = 110, cx = 180;
+    for (let i = 0; i <= pares; i++) {
+      const y = 20 + i * (590 / pares), a = i * 0.42 + 0.6, p = Math.cos(a);
+      const x1 = cx + Math.sin(a) * amp, x2 = cx + Math.sin(a + Math.PI) * amp, xm = (x1 + x2) / 2;
+      c.lineWidth = 5; c.lineCap = "round"; c.globalAlpha = .35 + .45 * (p + 1) / 2;
+      c.strokeStyle = col[i % 4]; c.beginPath(); c.moveTo(x1, y); c.lineTo(xm, y); c.stroke();
+      c.strokeStyle = col[(i + 1) % 4]; c.beginPath(); c.moveTo(xm, y); c.lineTo(x2, y); c.stroke();
+      c.globalAlpha = 1;
+      c.fillStyle = p > 0 ? col[1] : col[0]; c.beginPath(); c.arc(x1, y, 7 + p * 2, 0, 7); c.fill();
+      c.fillStyle = p > 0 ? col[0] : col[1]; c.beginPath(); c.arc(x2, y, 7 - p * 2, 0, 7); c.fill();
+    }
+  </script>
+</body></html>

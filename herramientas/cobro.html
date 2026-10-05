@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="es">
+<head>
+<!-- Generado por scripts/herramientas.mjs. Edita herramientas/src/. -->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Cobro por transferencia · ADN</title>
+<meta name="description" content="Crea ligas de cobro por SPEI o CoDi sin comisión de tarjeta, con referencia para identificar cada pago.">
+<link rel="canonical" href="https://adn-mazatlan.netlify.app/herramientas/cobro.html">
+<meta property="og:title" content="Cobro por transferencia · ADN">
+<meta property="og:description" content="Crea ligas de cobro por SPEI o CoDi sin comisión de tarjeta, con referencia para identificar cada pago.">
+<meta property="og:image" content="https://adn-mazatlan.netlify.app/img/og.png">
+<meta name="theme-color" content="#13211e">
+<link rel="icon" href="../img/icono.svg" type="image/svg+xml">
+<link rel="preload" href="../fuentes/unbounded.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="../estilos.css">
+<link rel="stylesheet" href="herramientas.css">
+</head>
+<body data-raiz="../">
+<a class="saltar" href="#contenido">Saltar al contenido</a>
+<header class="nav">
+  <div class="envoltura">
+    <a class="marca" href="../" aria-label="ADN, inicio"><svg viewBox="0 0 26 26" aria-hidden="true"><path d="M6 2c0 8 14 8 14 11S6 16 6 24" fill="none" stroke="var(--t)" stroke-width="2.6" stroke-linecap="round"/><path d="M20 2c0 8-14 8-14 11s14 3 14 11" fill="none" stroke="var(--a)" stroke-width="2.6" stroke-linecap="round"/></svg>ADN</a>
+    <div class="nav-der"><a class="idioma" href="./">Herramientas</a><a class="boton wa" data-wa="Hola, ADN. Probé el cobro por transferencia y quiero algo así para mi negocio.">WhatsApp</a></div>
+  </div>
+</header>
+<main id="contenido" class="envoltura">
+  <section class="tool-cabeza" style="padding-block-end:0">
+    <p class="ceja">Herramienta · Tomar y cobrar</p>
+    <h1>Cobro por transferencia</h1>
+    <p class="lead">Cobra por SPEI o DiMo sin la comisión de la tarjeta. Cada cobro lleva su referencia y, con tu estado de cuenta, sabes en segundos quién ya pagó.</p>
+    <div class="aviso-demo"><span><b>Demo.</b> Usa una CLABE de ejemplo; nada se guarda fuera de tu navegador. CoDi con QR se conecta cuando el banco del negocio lo ofrece.</span></div>
+  </section>
+  <div class="dos">
+    <section class="panel" aria-labelledby="t-crear">
+      <header><p class="ceja">Crear cobro</p><h2 id="t-crear">Datos para tu cliente</h2></header>
+      <div class="campos2">
+        <label for="negocio">Negocio<input id="negocio" value="Café La Muestra"></label>
+        <label for="beneficiario">Beneficiario (como aparece en el banco)<input id="beneficiario" value="Nombre del titular"></label>
+      </div>
+      <label for="clabe">CLABE<input id="clabe" inputmode="numeric" maxlength="22" value="032180000118359719"></label>
+      <p class="sub" id="clabe-estado"></p>
+      <div class="campos2">
+        <label for="monto">Monto (MXN)<input id="monto" type="number" min="1" step="0.01" value="175"></label>
+        <label for="conc">Concepto<input id="conc" value="Pedido LM482"></label>
+      </div>
+      <div class="campos2">
+        <label for="dimo">Celular DiMo (opcional)<input id="dimo" inputmode="tel" placeholder="669 216 6036"></label>
+        <label for="cliente-tel">WhatsApp del cliente<input id="cliente-tel" inputmode="tel" placeholder="669 123 4567"></label>
+      </div>
+      <button class="boton" type="button" id="crear" style="justify-self:start">Crear cobro</button>
+      <p class="error-msj" id="error" role="alert" hidden></p>
+      <div id="creado"></div>
+    </section>
+    <section class="panel" aria-labelledby="t-conciliar">
+      <header><p class="ceja">¿Quién ya pagó?</p><h2 id="t-conciliar">Conciliar con tu banco</h2>
+        <p class="sub">Pega el estado de cuenta en CSV (fecha, descripción, referencia, abono). Hay uno de ejemplo.</p></header>
+      <label for="csv">Movimientos<textarea id="csv" rows="6"></textarea></label>
+      <button class="boton claro" type="button" id="conciliar" style="justify-self:start">Conciliar</button>
+      <div class="tabla-envuelta"><table class="tabla"><thead><tr><th>Cobro</th><th>Concepto</th><th class="num">Monto</th><th>Estado</th></tr></thead><tbody id="cobros"></tbody></table></div>
+      <div id="sin-cobro"></div>
+    </section>
+  </div>
+</main>
+<footer>
+  <div class="envoltura"><span>ADN · Mazatlán, Sinaloa</span><nav aria-label="Pie de página"><a href="../">Inicio</a><a href="./">Todas las herramientas</a><a href="../privacidad.html">Aviso de privacidad</a></nav></div>
+</footer>
+<script src="../datos.js"></script>
+<script type="module" src="../adn.js"></script>
+<script type="module" src="cobro.js"></script>
+</body>
+</html>

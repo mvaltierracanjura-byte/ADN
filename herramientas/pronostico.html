@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="es">
+<head>
+<!-- Generado por scripts/herramientas.mjs. Edita herramientas/src/. -->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Cuánto preparar mañana · ADN</title>
+<meta name="description" content="Calcula cuánto preparar de cada producto según tus ventas por día de la semana, la tendencia y el clima.">
+<link rel="canonical" href="https://adn-mazatlan.netlify.app/herramientas/pronostico.html">
+<meta property="og:title" content="Cuánto preparar mañana · ADN">
+<meta property="og:description" content="Calcula cuánto preparar de cada producto según tus ventas por día de la semana, la tendencia y el clima.">
+<meta property="og:image" content="https://adn-mazatlan.netlify.app/img/og.png">
+<meta name="theme-color" content="#13211e">
+<link rel="icon" href="../img/icono.svg" type="image/svg+xml">
+<link rel="preload" href="../fuentes/unbounded.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="../estilos.css">
+<link rel="stylesheet" href="herramientas.css">
+</head>
+<body data-raiz="../">
+<a class="saltar" href="#contenido">Saltar al contenido</a>
+<header class="nav">
+  <div class="envoltura">
+    <a class="marca" href="../" aria-label="ADN, inicio"><svg viewBox="0 0 26 26" aria-hidden="true"><path d="M6 2c0 8 14 8 14 11S6 16 6 24" fill="none" stroke="var(--t)" stroke-width="2.6" stroke-linecap="round"/><path d="M20 2c0 8-14 8-14 11s14 3 14 11" fill="none" stroke="var(--a)" stroke-width="2.6" stroke-linecap="round"/></svg>ADN</a>
+    <div class="nav-der"><a class="idioma" href="./">Herramientas</a><a class="boton wa" data-wa="Hola, ADN. Probé el pronóstico de producción y quiero algo así para mi negocio.">WhatsApp</a></div>
+  </div>
+</header>
+<main id="contenido" class="envoltura">
+  <section class="tool-cabeza" style="padding-block-end:0">
+    <p class="ceja">Herramienta · Controlar</p>
+    <h1>Cuánto preparar mañana</h1>
+    <p class="lead">Con tus ventas por día te decimos cuántas piezas de cada producto preparar, según el día de la semana, la tendencia y el clima. Menos producto tirado, menos “se nos acabó”.</p>
+  </section>
+  <div class="dos">
+    <section class="panel" aria-labelledby="t-datos">
+      <header><p class="ceja">Tus datos</p><h2 id="t-datos">Ventas y condiciones</h2>
+        <p class="sub">Usamos 10 semanas de ventas de ejemplo de una cafetería. Puedes subir las tuyas en CSV con columnas fecha, producto y cantidad.</p></header>
+      <label for="archivo">Subir CSV de ventas<input id="archivo" type="file" accept=".csv,text/csv"></label>
+      <p class="sub" id="datos-estado"></p>
+      <label for="fecha">Día a pronosticar<input id="fecha" type="date"></label>
+      <div class="chips" role="group" aria-label="Condiciones del día">
+        <button type="button" aria-pressed="false" data-ajuste="calor">Día de calor<small>frappés +30%</small></button>
+        <button type="button" aria-pressed="false" data-ajuste="lluvia">Lluvia<small>todo −15%</small></button>
+        <button type="button" aria-pressed="false" data-ajuste="evento">Evento o quincena<small>todo +20%</small></button>
+      </div>
+      <label for="colchon">Colchón de seguridad<span class="fila" style="display:flex;gap:12px;align-items:center"><input id="colchon" type="range" min="0" max="30" value="10" style="flex:1"><output id="colchon-o">10%</output></span></label>
+    </section>
+    <section class="panel" aria-labelledby="t-res">
+      <header><p class="ceja">Resultado</p><h2 id="t-res">Para preparar</h2></header>
+      <div class="tabla-envuelta"><table class="tabla"><thead><tr><th>Producto</th><th class="num">Se venderán</th><th class="num">Rango normal</th><th class="num">Preparar</th></tr></thead><tbody id="tabla"></tbody></table></div>
+      <p class="sub" id="evaluacion"></p>
+    </section>
+  </div>
+</main>
+<footer>
+  <div class="envoltura"><span>ADN · Mazatlán, Sinaloa</span><nav aria-label="Pie de página"><a href="../">Inicio</a><a href="./">Todas las herramientas</a><a href="../privacidad.html">Aviso de privacidad</a></nav></div>
+</footer>
+<script src="../datos.js"></script>
+<script type="module" src="../adn.js"></script>
+<script type="module" src="pronostico.js"></script>
+</body>
+</html>

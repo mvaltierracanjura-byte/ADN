@@ -1,0 +1,36 @@
+<main id="contenido" class="envoltura">
+  <section class="tool-cabeza" style="padding-block-end:0">
+    <p class="ceja">Herramienta · Controlar</p>
+    <h1>Aviso de privacidad</h1>
+    <p class="lead">La ley de datos personales de 2025 obliga a todo negocio que pide datos a sus clientes, sin importar su tamaño. Llena esto y obtén una base para tu aviso.</p>
+    <div class="aviso-demo"><span>Es un punto de partida, no asesoría legal. Si tratas datos de salud, pide a un abogado que lo revise.</span></div>
+  </section>
+  <div class="dos">
+    <section class="panel" aria-labelledby="t-datos">
+      <header><p class="ceja">Tus datos</p><h2 id="t-datos">Responsable</h2></header>
+      <div class="campos2">
+        <label for="responsable">Nombre o razón social<input id="responsable" value="Ana López Pérez"></label>
+        <label for="comercial">Nombre comercial<input id="comercial" value="Consultorio Sonrisa"></label>
+      </div>
+      <label for="domicilio">Domicilio<input id="domicilio" value="Av. Del Mar 100, Col. Centro, 82000 Mazatlán, Sinaloa"></label>
+      <div class="campos2">
+        <label for="correo">Correo de privacidad<input id="correo" value="privacidad@ejemplo.mx"></label>
+        <label for="telefono">Teléfono<input id="telefono" value="669 000 0000"></label>
+      </div>
+      <div class="paso"><b>Datos que pides</b><div id="datos"></div></div>
+      <label for="finalidades">¿Para qué los usas? (uno por renglón)<textarea id="finalidades">Agendar y recordarte tus citas
+Darte el servicio que contrataste
+Facturar cuando lo pidas</textarea></label>
+      <label for="secundarias">Usos adicionales que el cliente puede rechazar<textarea id="secundarias">Mandarte promociones y novedades</textarea></label>
+      <label for="comparte">Con quién los compartes (proveedores)<textarea id="comparte">Proveedor de facturación electrónica
+WhatsApp (Meta) para mandarte mensajes</textarea></label>
+    </section>
+    <section class="panel" aria-labelledby="t-aviso">
+      <header><p class="ceja">Resultado</p><h2 id="t-aviso">Tu aviso</h2></header>
+      <textarea id="aviso" rows="24" readonly style="font-size:.9rem"></textarea>
+      <div class="acciones-mini"><button type="button" id="copiar">Copiar aviso</button></div>
+      <b>Versión corta (junto a tus formularios)</b>
+      <div class="mensaje-wa" id="corto"></div>
+    </section>
+  </div>
+</main>

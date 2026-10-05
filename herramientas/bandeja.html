@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="es">
+<head>
+<!-- Generado por scripts/herramientas.mjs. Edita herramientas/src/. -->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Bandeja inteligente · ADN</title>
+<meta name="description" content="Clasifica cada mensaje (queja, pedido, cita, precio…), decide si contesta la IA o una persona, y reactiva a los clientes que no han vuelto.">
+<link rel="canonical" href="https://adn-mazatlan.netlify.app/herramientas/bandeja.html">
+<meta property="og:title" content="Bandeja inteligente · ADN">
+<meta property="og:description" content="Clasifica cada mensaje (queja, pedido, cita, precio…), decide si contesta la IA o una persona, y reactiva a los clientes que no han vuelto.">
+<meta property="og:image" content="https://adn-mazatlan.netlify.app/img/og.png">
+<meta name="theme-color" content="#13211e">
+<link rel="icon" href="../img/icono.svg" type="image/svg+xml">
+<link rel="preload" href="../fuentes/unbounded.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="../estilos.css">
+<link rel="stylesheet" href="herramientas.css">
+</head>
+<body data-raiz="../">
+<a class="saltar" href="#contenido">Saltar al contenido</a>
+<header class="nav">
+  <div class="envoltura">
+    <a class="marca" href="../" aria-label="ADN, inicio"><svg viewBox="0 0 26 26" aria-hidden="true"><path d="M6 2c0 8 14 8 14 11S6 16 6 24" fill="none" stroke="var(--t)" stroke-width="2.6" stroke-linecap="round"/><path d="M20 2c0 8-14 8-14 11s14 3 14 11" fill="none" stroke="var(--a)" stroke-width="2.6" stroke-linecap="round"/></svg>ADN</a>
+    <div class="nav-der"><a class="idioma" href="./">Herramientas</a><a class="boton wa" data-wa="Hola, ADN. Probé la bandeja inteligente y quiero algo así para mi negocio.">WhatsApp</a></div>
+  </div>
+</header>
+<main id="contenido" class="envoltura">
+  <section class="tool-cabeza" style="padding-block-end:0">
+    <p class="ceja">Herramienta · Atender y Ganar clientes</p>
+    <h1>Bandeja inteligente</h1>
+    <p class="lead">Cada mensaje se clasifica y toma su camino: la asistente contesta lo sencillo, pregunta lo que falta y pasa a una persona las quejas y lo delicado. Y cada día te dice a quién escribirle para que vuelva.</p>
+  </section>
+  <div class="dos">
+    <section class="panel" aria-labelledby="t-bandeja">
+      <header><p class="ceja">Mensajes de hoy (ejemplo)</p><h2 id="t-bandeja">Qué hacer con cada uno</h2></header>
+      <form id="probar" class="paso" novalidate>
+        <label for="msj">Prueba con un mensaje<input id="msj" placeholder="Ej.: mi pedido 4823 llegó incompleto"></label>
+        <button class="boton claro" type="submit" style="justify-self:start">Clasificar</button>
+      </form>
+      <div class="kpis" id="resumen-rutas"></div>
+      <ul class="lista-citas" id="bandeja"></ul>
+    </section>
+    <section class="panel" aria-labelledby="t-reac">
+      <header><p class="ceja">Seguimiento diario</p><h2 id="t-reac">Clientes para reactivar</h2>
+        <p class="sub">Con clientes de ejemplo. Respeta a quien pidió no recibir mensajes y no le escribe a nadie dos veces en 14 días.</p></header>
+      <label for="oferta">Oferta (opcional)<input id="oferta" placeholder="Ej.: un postre gratis con tu bebida"></label>
+      <div id="plan-resumen"></div>
+      <div id="plan"></div>
+    </section>
+  </div>
+</main>
+<footer>
+  <div class="envoltura"><span>ADN · Mazatlán, Sinaloa</span><nav aria-label="Pie de página"><a href="../">Inicio</a><a href="./">Todas las herramientas</a><a href="../privacidad.html">Aviso de privacidad</a></nav></div>
+</footer>
+<script src="../datos.js"></script>
+<script type="module" src="../adn.js"></script>
+<script type="module" src="bandeja.js"></script>
+</body>
+</html>
