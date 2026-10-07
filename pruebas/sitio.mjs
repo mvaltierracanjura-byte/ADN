@@ -92,8 +92,19 @@ await prueba("demo de Vektor: pedido, total, folio y paso a persona", async () =
   assert.match(await ultima(), /2 × Latte, 1 × Galleta rellena/);
   await p.click("#sugeridas >> text=Eso es todo");
   await p.waitForFunction(() => /Total: \$175/.test(document.querySelector("#chat").textContent));
+  assert.deepEqual(await p.locator("#sugeridas button").allTextContents(), ["Paso por él", "Envíamelo"]);
   await p.click("#sugeridas >> text=Paso por él");
   await p.waitForFunction(() => /folio es LM-\d{3}/.test(document.querySelector("#chat").textContent));
+  assert.ok((await p.locator("#sugeridas button").allTextContents()).includes("¿Qué tienen?"), "regresan los botones de inicio");
+  // Te lo enviamos: pregunta la colonia, cotiza el envío y suma el total
+  await p.click("#sugeridas >> text=Quiero 2 lattes y una galleta");
+  await p.waitForFunction(() => (document.querySelector("#chat").textContent.match(/\$175/g) || []).length >= 3);
+  await p.click("#sugeridas >> text=Eso es todo");
+  await p.click("#sugeridas >> text=Envíamelo");
+  await p.waitForFunction(() => /¿A qué colonia\?/.test(document.querySelector("#chat").textContent));
+  await p.click("#sugeridas >> text=Zona Dorada");
+  await p.waitForFunction(() => /Envío a Zona Dorada: \$45 \(de ejemplo\)\. Total: \$220/.test(document.querySelector("#chat").textContent));
+  assert.match(await ultima(), /folio es LM-\d{3}/);
   await p.fill("#chat-texto", "un matcha latte por favor");
   await p.press("#chat-texto", "Enter");
   await p.waitForFunction(() => /1 × Matcha latte\.\s+Llevas \$75/.test(document.querySelector("#chat").innerText));

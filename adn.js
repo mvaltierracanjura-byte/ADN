@@ -92,7 +92,9 @@ import { detectarIdioma } from "./kit/idioma.js";
     const NUM = { un: 1, una: 1, uno: 1, dos: 2, tres: 3, cuatro: 4, cinco: 5, seis: 6, a: 1, an: 1, one: 1, two: 2, three: 3, four: 4, five: 5 };
     const norm = (s) => s.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[¿?¡!.,]/g, " ");
     const NOMBRE_EN = { matcha: "Matcha latte", frappe: "Caramel frappé", americano: "Americano", latte: "Latte", galleta: "Stuffed cookie" };
-    let pedido = {}, entregaPreguntada = false, idioma = "es";
+    // Envío de ejemplo por colonia (el sistema real lo cotiza por colonia y hora antes de cobrar).
+    const ENVIO = [["centro", "Centro", 35], ["zona dorada", "Zona Dorada", 45], ["cerritos", "Cerritos", 60]];
+    let pedido = {}, entrega = null, idioma = "es"; // entrega: null | "pregunta" | "colonia"
     const T = (es, en) => (idioma === "en" ? en : es);
     const nombreDe = (p) => (idioma === "en" ? NOMBRE_EN[p.id] : p.nombre);
     const decir = (texto, quien = "asistente") => {
@@ -102,6 +104,18 @@ import { detectarIdioma } from "./kit/idioma.js";
     };
     const total = () => Object.entries(pedido).reduce((s, [id, n]) => s + NEGOCIO.productos.find((p) => p.id === id).precio * n, 0);
     const resumen = () => Object.entries(pedido).map(([id, n]) => { const p = NEGOCIO.productos.find((x) => x.id === id); return `${n} × ${nombreDe(p)}: ${pesos(p.precio * n)}`; }).join("\n");
+    // Botones sugeridos según el momento de la plática; al terminar regresan los de inicio.
+    const sugeridas = $("#sugeridas");
+    const INICIALES = $$("button", sugeridas).map((b) => b.textContent);
+    const sugerir = (lista) => {
+      sugeridas.replaceChildren(...lista.map((t) => { const b = document.createElement("button"); b.type = "button"; b.textContent = t; return b; }));
+    };
+    const cerrarPedido = (lineas) => {
+      const folio = "LM-" + String(Math.floor(100 + Math.random() * 900));
+      decir(T(`Perfecto. Tu folio es ${folio}.\n${lineas.es}Aquí está tu liga de pago (de ejemplo): pago.ejemplo/${folio}\nEn cuanto se acredite, tu pedido entra a la barra y te aviso cuando esté listo.`,
+        `Perfect. Your order number is ${folio}.\n${lineas.en}Here's your payment link (example): pago.ejemplo/${folio}\nAs soon as it's paid, your order goes to the bar and I'll let you know when it's ready.`));
+      pedido = {}; entrega = null; sugerir(INICIALES);
+    };
     const persona = (motivo) => {
       decir(motivo);
       setTimeout(() => decir(T("En la vida real, aquí la plática pasa a la pantalla del equipo como “Necesita a una persona”, y alguien te contesta.",
@@ -111,6 +125,19 @@ import { detectarIdioma } from "./kit/idioma.js";
       idioma = detectarIdioma(texto, idioma);
       const t = " " + norm(texto) + " ";
       const palabras = t.trim().split(/\s+/);
+      if (entrega === "colonia") {
+        const c = ENVIO.find(([clave]) => t.includes(" " + clave + " "));
+        const nombre = c ? c[1] : texto.trim().slice(0, 40), costo = c ? c[2] : 50;
+        const linea = (et) => `${et} ${nombre}: ${pesos(costo)} (de ejemplo). Total: ${pesos(total() + costo)}.\n`;
+        return cerrarPedido({ es: linea("Envío a"), en: linea("Delivery to") });
+      }
+      if (entrega === "pregunta" && / (envia|enviamelo|envialo|envien|enviar|enviarlo|mandamelo|mandalo|domicilio|deliver|delivery|delivered) /.test(t)) {
+        entrega = "colonia";
+        sugerir(ENVIO.map((e) => e[1]));
+        return decir(T("Claro, te lo enviamos. ¿A qué colonia? El envío se calcula por colonia y te lo digo antes de cobrar.",
+          "Sure, we'll deliver it. Which neighborhood? The delivery fee depends on it, and I'll tell you before you pay."));
+      }
+      if (entrega === "pregunta" && / (paso|recoger|recojo|voy|pick|pickup) /.test(t)) return cerrarPedido({ es: "", en: "" });
       const agregados = [];
       palabras.forEach((w, i) => {
         if (/^matcha$/.test(w) && /^lattes?$/.test(palabras[i + 1] || "")) palabras[i + 1] = "_";
@@ -138,16 +165,9 @@ import { detectarIdioma } from "./kit/idioma.js";
       if (/ (envio|envios|domicilio|mandan|llevan|entregan|delivery|deliver) /.test(t)) return decir(T("Sí, enviamos a domicilio. El costo depende de tu colonia: dime cuál es y te lo cotizo antes de cobrar.", "Yes, we deliver. The fee depends on your neighborhood: tell me which one and I'll quote it before you pay."));
       if (/ (eso es todo|es todo|seria todo|nada mas|ya es todo|listo|that's all|thats all|that is all|that's it|thats it) /.test(t)) {
         if (!Object.keys(pedido).length) return decir(T("Todavía no tienes nada en tu pedido. ¿Qué te sirvo?", "Your order is empty so far. What can I get you?"));
-        entregaPreguntada = true;
+        entrega = "pregunta";
+        sugerir(idioma === "en" ? ["I'll pick it up", "Deliver it to me"] : ["Paso por él", "Envíamelo"]);
         return decir(T(`Tu pedido:\n${resumen()}\nTotal: ${pesos(total())}\n\n¿Pasas por él o te lo enviamos?`, `Your order:\n${resumen()}\nTotal: ${pesos(total())}\n\nWill you pick it up or should we deliver it?`));
-      }
-      if (entregaPreguntada && / (paso|recoger|recojo|voy|enviar|envien|envialo|domicilio|pick|pickup|deliver|delivery) /.test(t)) {
-        entregaPreguntada = false;
-        const folio = "LM-" + String(Math.floor(100 + Math.random() * 900));
-        decir(T(`Perfecto. Tu folio es ${folio}.\nAquí está tu liga de pago (de ejemplo): pago.ejemplo/${folio}\nEn cuanto se acredite, tu pedido entra a la barra y te aviso cuando esté listo.`,
-          `Perfect. Your order number is ${folio}.\nHere's your payment link (example): pago.ejemplo/${folio}\nAs soon as it's paid, your order goes to the bar and I'll let you know when it's ready.`));
-        pedido = {};
-        return;
       }
       if (/ (hola|buenas|buen dia|buenos dias|buenas tardes|buenas noches|hi|hello|hey) /.test(t)) return decir(T("¡Hola! Soy Vektor, el asistente de Café La Muestra. Te puedo pasar el menú, el horario o tomar tu pedido.", "Hi! I'm Vektor, Café La Muestra's assistant. I can share the menu, our hours, or take your order."));
       if (/ (gracias|thanks|thank you) /.test(t)) return decir(T("¡A ti! Aquí estoy si necesitas algo más.", "You're welcome! I'm here if you need anything else."));
@@ -156,7 +176,7 @@ import { detectarIdioma } from "./kit/idioma.js";
     const enviar = (texto) => { if (!texto.trim()) return; decir(texto, "cliente"); setTimeout(() => responder(texto), 450); };
     decir("Café La Muestra es un negocio de ejemplo. Las respuestas son de demostración.", "sistema");
     decir("¡Hola! Soy Vektor, el asistente de Café La Muestra. ¿Qué te sirvo hoy?");
-    $$("#sugeridas button").forEach((b) => b.addEventListener("click", () => enviar(b.textContent)));
+    sugeridas.addEventListener("click", (e) => { const b = e.target.closest("button"); if (b) enviar(b.textContent); });
     const forma = $("#escribir");
     forma.addEventListener("submit", (e) => { e.preventDefault(); const i = $("#chat-texto"); enviar(i.value); i.value = ""; });
   }
