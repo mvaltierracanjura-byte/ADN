@@ -113,12 +113,7 @@ ${JSON.stringify(ld, null, 2)}
         <li><h3>Proponer</h3><p>Qué construir primero, por qué y cuánto cuesta.</p></li>
         <li><h3>Construir</h3><p>Etapas cortas, con pruebas, a tu nombre.</p></li>
         <li><h3>Medir y ajustar</h3><p>Números reales; lo que no sirve se quita.</p></li>
-      </ol>${g.caso ? `
-      <div class="tarjeta" style="margin-top:32px">
-        <p class="ceja">Caso real</p>
-        <h3>Osako Coffee, Mazatlán</h3>
-        <p>Página de pedidos, pantalla de barra con alertas a los 10 minutos, cobro en la página, envío por colonia, tarjeta de sellos y asistente de WhatsApp. <a href="../#osako">Ver el caso</a>.</p>
-      </div>` : ""}
+      </ol>
     </div>
   </section>
 

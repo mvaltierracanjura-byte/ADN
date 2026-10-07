@@ -12,10 +12,13 @@
 - Tercera ronda: cobros guardados en la base (el enlace de pago lleva solo un token), autofactura conectada a Facturama
   (tickets, solicitudes, timbrado con reintentos y correo), citas en el calendario del teléfono (ICS) y pruebas en
   GitHub Actions en cada push.
-- 294 pruebas automáticas (84 de lógica, 83 de base de datos, 127 de navegador).
+- Cuarta ronda (7 oct 2026, pedido de Marco): la página ya no habla de otros negocios (sin caso Osako). Secciones nuevas
+  sobre lo que ofrecemos: En qué te ayudamos (hoy contra con ADN), Resultados (qué medimos), Lo que te entregamos,
+  ¿Es para ti?, Tus datos y 6 preguntas frecuentes más. En inglés, "What we improve".
+- 295 pruebas automáticas (84 de lógica, 83 de base de datos, 128 de navegador).
 
-**Falta (depende de Marco o de la dueña de Osako):** domicilio para el aviso de privacidad, conectar Netlify al repo, dominio y
-correo propios, perfil de Google, foto, precios, testimonio y números de Osako, medición de visitas.
+**Falta (depende de Marco):** domicilio para el aviso de privacidad, conectar Netlify al repo, dominio y
+correo propios, perfil de Google, foto, precios y medición de visitas.
 
 ---
 

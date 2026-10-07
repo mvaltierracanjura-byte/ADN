@@ -135,7 +135,7 @@ await prueba("celular: menú abre y cierra; botón flotante visible", async () =
   assert.ok(await p.locator("#menu").isHidden());
   await p.click(".abrir-menu");
   assert.ok(await p.locator("#menu").isVisible());
-  await p.click("#menu >> text=Pruébalo");
+  await p.click("#menu >> text=Demo");
   assert.ok(await p.locator("#menu").isHidden());
   await ctx.close();
 });
@@ -266,6 +266,19 @@ await prueba("diagnóstico: recomienda y arma el WhatsApp", () => enPagina("/her
   assert.match(await p.textContent("#resultado .ok-msj"), /Agenda con recordatorios/);
   assert.match(decodeURIComponent(await p.getAttribute("#resultado a.boton.wa", "href")), /Hice el diagnóstico/);
 }));
+
+await prueba("la página habla de lo que ofrecemos, no de otros negocios", async () => {
+  for (const ruta of ["/", "/en/", ...ADN.giros.map((g) => `/giros/${g.id}.html`)]) {
+    const { p, ctx } = await abrir(ruta);
+    assert.doesNotMatch(await p.content(), /osako/i, ruta);
+    await ctx.close();
+  }
+  const { p, ctx } = await abrir("/");
+  for (const id of ["ayudamos", "mejoramos", "entregamos", "para-quien", "cuidamos"]) assert.equal(await p.locator("#" + id).count(), 1, id);
+  assert.equal(await p.locator("#ayudamos .ayuda-fila:not(.ayuda-cab)").count(), 9);
+  for (const a of await p.locator(".menu a[href^='#']").all()) assert.equal(await p.locator(await a.getAttribute("href")).count(), 1, "el menú apunta a secciones que existen");
+  await ctx.close();
+});
 
 // Negocio conectado: kit/config.js con Supabase (falso, en el mismo origen para respetar la CSP).
 async function conectado(ruta, rpcs, fn) {

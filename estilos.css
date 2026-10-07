@@ -65,7 +65,8 @@ p { margin: 0; }
 .marca { font-family: var(--display); font-weight: 700; font-size: 1.3rem; text-decoration: none; display: flex; align-items: center; gap: 10px; }
 .marca svg { width: 26px; height: 26px; }
 .menu { list-style: none; display: flex; gap: 22px; margin: 0; padding: 0; font-weight: 500; font-size: 0.95rem; }
-.menu a { text-decoration: none; color: var(--muted); }
+.menu a { text-decoration: none; color: var(--muted); white-space: nowrap; }
+@media (max-width: 1100px) and (min-width: 881px) { .menu { gap: 14px; font-size: 0.9rem; } }
 .menu a:hover, .menu a[aria-current="page"] { color: var(--ink); }
 .nav-der { display: flex; align-items: center; gap: 10px; }
 .idioma { font: 600 0.85rem var(--body); color: var(--muted); text-decoration: none; padding: 6px 8px; }
@@ -213,11 +214,42 @@ section { padding-block: clamp(56px, 8vw, 96px); }
 /* Caso Osako */
 .caso { display: grid; grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr); gap: 44px; align-items: start; }
 .caso .texto { display: grid; gap: 16px; }
-.hecho { border: 1px solid var(--line); border-radius: 16px; background: var(--surface); overflow: hidden; }
-.hecho div { display: grid; grid-template-columns: 30px minmax(0, 1fr); gap: 12px; padding: 16px 20px; border-bottom: 1px solid var(--line); }
-.hecho div:last-child { border-bottom: 0; }
-.hecho p { color: var(--muted); font-size: 0.95rem; }
-.hecho b { color: var(--ink); font-weight: 600; display: block; }
+/* En qué te ayudamos: hoy contra con ADN */
+.ayuda { border: 1px solid var(--line); border-radius: 16px; background: var(--surface); overflow: hidden; }
+.ayuda-fila { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); border-bottom: 1px solid var(--line); }
+.ayuda-fila:last-child { border-bottom: 0; }
+.ayuda-fila > * { padding: 16px 20px; margin: 0; }
+.ayuda-fila > :first-child { color: var(--muted); border-right: 1px solid var(--line); }
+.ayuda-fila > :last-child { display: grid; grid-template-columns: 30px minmax(0, 1fr); gap: 12px; align-items: start; }
+.ayuda-cab > * { font-family: var(--mono); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); padding-block: 12px; }
+.ayuda-cab > :last-child { display: block; color: var(--ink); }
+@media (max-width: 680px) {
+  .ayuda-cab { display: none; }
+  .ayuda-fila { grid-template-columns: 1fr; }
+  .ayuda-fila > :first-child { border-right: 0; padding-bottom: 4px; font-size: 0.93rem; }
+  .ayuda-fila > :first-child::before { content: "Hoy: "; font-weight: 600; }
+  .ayuda-fila > :last-child { padding-top: 6px; }
+}
+/* Qué mejoramos */
+.medimos { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+.medimos .tarjeta { align-content: start; }
+.medimos .tarjeta h3 { font-size: 1.02rem; }
+@media (max-width: 900px) { .medimos { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 560px) { .medimos { grid-template-columns: 1fr; } }
+/* Lo que te entregamos */
+.entregamos { display: grid; grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr); gap: 44px; align-items: start; }
+.entregamos .texto { display: grid; gap: 16px; }
+.entregables { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 22px 28px; }
+.entregables li { padding-left: 30px; position: relative; color: var(--muted); font-size: 0.95rem; }
+.entregables li::before { content: "✓"; position: absolute; left: 0; top: 0; font-weight: 700; color: var(--ok); }
+.entregables b { display: block; color: var(--ink); font-weight: 600; font-size: 1rem; margin-bottom: 2px; }
+@media (max-width: 860px) { .entregamos { grid-template-columns: 1fr; } }
+@media (max-width: 520px) { .entregables { grid-template-columns: 1fr; } }
+/* ¿Es para ti? */
+.encaja { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+.encaja .tarjeta { gap: 14px; align-content: start; }
+.principios.no li::before { background: transparent; border: 2px solid var(--muted); }
+@media (max-width: 760px) { .encaja { grid-template-columns: 1fr; } }
 @media (max-width: 860px) { .caso { grid-template-columns: 1fr; } }
 
 /* Datos */

@@ -49,10 +49,12 @@ INVESTIGACION.md, MEJORAS.md                   # mercado (incluye videos en 7 id
 ## Reglas
 
 - **No inventar datos de negocios ni de clientes.** Cifras públicas siempre con fuente. Precios de ADN, testimonios
-  y números de Osako solo cuando Marco los dé (y la dueña de Osako lo autorice).
+  solo cuando Marco los dé.
 - **Hablar de resultados, no de IA.** La IA no se presenta como socia ni se usa la marca Anthropic como respaldo.
   Marco va al frente. "Siempre hay una persona detrás" es promesa central. Los asistentes dicen que son asistentes.
-- Las demos usan **negocios de ejemplo** (Café La Muestra, Consultorio Dental Sonrisa), no a Osako.
+- **La página habla de lo que ADN ofrece, ayuda y mejora; no de trabajos para otros negocios** (decisión de Marco,
+  7 oct 2026). Nada de casos, logos ni nombres de clientes. Las demos usan **negocios de ejemplo** (Café La Muestra,
+  Consultorio Dental Sonrisa). Una prueba de `sitio.mjs` revisa que no aparezca Osako.
 - **Claude** (servidor): SDK oficial `@anthropic-ai/sdk`, cliente inyectado (las pruebas usan uno simulado).
   Modelo por defecto `claude-opus-5-5` (`ADN_MODELO` para cambiarlo), `fallbacks: "default"` con la beta
   `server-side-fallback-2026-07-01`, instrucciones fijas en caché y la fecha como mensaje de sistema al final,
@@ -74,12 +76,11 @@ INVESTIGACION.md, MEJORAS.md                   # mercado (incluye videos en 7 id
 ```bash
 node --test pruebas/*.test.mjs                                     # lógica y servidor (84)
 ADN_DEPS=~/adn-deps node supabase/test-schema.mjs                   # base de datos en Postgres real (83)
-NODE_PATH=$(npm root -g) node pruebas/sitio.mjs [carpeta-capturas]  # navegador: páginas, herramientas y modo conectado (127)
+NODE_PATH=$(npm root -g) node pruebas/sitio.mjs [carpeta-capturas]  # navegador: páginas, herramientas y modo conectado (128)
 ```
 
 ## Pendientes de Marco
 
 - Domicilio del responsable en `privacidad.html` (marcado en amarillo). **No publicar sin eso.**
 - Conectar Netlify al repo (publica solo en cada push), dominio y correo propios, perfil de Google Business de ADN, foto, precios.
-- Permiso, testimonio y números de la dueña de Osako para el caso.
 - Para clientes: llaves de Anthropic, Meta (WhatsApp), Twilio, Facturama, según lo que contraten.
