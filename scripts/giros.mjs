@@ -13,6 +13,9 @@ const BASE = Object.fromEntries(ADN.bases.map((b) => [b.letra, b.nombre]));
 const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]);
 const WA_SVG = `<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.2-.4.7-1.4.1-.2 0-.3 0-.5l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.2.7.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.3-.2-.5-.3Z"/></svg>`;
 
+// Títulos con una palabra larga ("Desarrolladoras") van más chicos para no invadir la ficha de al lado.
+const tamTitulo = (nombre) => (Math.max(...nombre.split(/\s+/).map((w) => w.length)) > 12 ? "clamp(1.7rem,3.6vw,2.6rem)" : "clamp(2rem,4.6vw,3.2rem)");
+
 function pagina(g) {
   const titulo = `${g.nombre} en Mazatlán: WhatsApp con IA, citas y cobro · ADN`;
   const desc = `${g.dolor} ADN construye las herramientas para resolverlo: ${g.hace.map((h) => h[1].replace(/\.$/, "").toLowerCase()).slice(0, 2).join("; ")}.`;
@@ -84,7 +87,7 @@ ${JSON.stringify(ld, null, 2)}
       <div class="caso">
         <div class="texto">
           <p class="ceja">Para ${esc(g.corto.toLowerCase())} en Mazatlán</p>
-          <h1 style="font-size:clamp(2rem,4.6vw,3.2rem)">${esc(g.nombre)}</h1>
+          <h1 style="font-size:${tamTitulo(g.nombre)};overflow-wrap:break-word">${esc(g.nombre)}</h1>
           <p class="lead">${esc(g.dolor)}</p>
           <div class="acciones">
             <a class="boton wa" data-wa="${esc(msg)}">${WA_SVG}Platiquemos por WhatsApp</a>

@@ -25,6 +25,7 @@ supabase/functions/{whatsapp,voz,recordatorios,  # Edge Functions (Deno); antes 
 .github/workflows/pruebas.yml                  # CI: las tres suites en cada push
 pruebas/                                       # *.test.mjs (node --test) y sitio.mjs (Playwright)
 docs/descubrimiento.md                         # guía de entrevista, piloto y propuesta
+docs/inmobiliario.md                           # oferta para inmobiliarias y desarrolladoras (sale de Perlux; interno)
 INVESTIGACION.md, MEJORAS.md                   # mercado (incluye videos en 7 idiomas) y estado de la página
 ```
 
@@ -54,7 +55,7 @@ INVESTIGACION.md, MEJORAS.md                   # mercado (incluye videos en 7 id
   Marco va al frente. "Siempre hay una persona detrás" es promesa central. Los asistentes dicen que son asistentes.
 - **La página habla de lo que ADN ofrece, ayuda y mejora; no de trabajos para otros negocios** (decisión de Marco,
   7 oct 2026). Nada de casos, logos ni nombres de clientes. Las demos usan **negocios de ejemplo** (Café La Muestra,
-  Consultorio Dental Sonrisa). Una prueba de `sitio.mjs` revisa que no aparezca Osako.
+  Consultorio Dental Sonrisa). Una prueba de `sitio.mjs` revisa que no aparezcan Osako ni Perlux.
 - **Claude** (servidor): SDK oficial `@anthropic-ai/sdk`, cliente inyectado (las pruebas usan uno simulado).
   Modelo por defecto `claude-opus-5-5` (`ADN_MODELO` para cambiarlo), `fallbacks: "default"` con la beta
   `server-side-fallback-2026-07-01`, instrucciones fijas en caché y la fecha como mensaje de sistema al final,
@@ -78,7 +79,7 @@ INVESTIGACION.md, MEJORAS.md                   # mercado (incluye videos en 7 id
 ```bash
 node --test pruebas/*.test.mjs                                     # lógica y servidor (85)
 ADN_DEPS=~/adn-deps node supabase/test-schema.mjs                   # base de datos en Postgres real (83)
-NODE_PATH=$(npm root -g) node pruebas/sitio.mjs [carpeta-capturas]  # navegador: páginas, herramientas y modo conectado (128)
+NODE_PATH=$(npm root -g) node pruebas/sitio.mjs [carpeta-capturas]  # navegador: páginas, herramientas y modo conectado (133)
 ```
 
 ## Pendientes de Marco

@@ -74,7 +74,7 @@ await prueba("bases: 4 columnas con 16 servicios", async () => {
   assert.equal(await p.locator("#bases .base-col").count(), 4);
   assert.equal(await p.locator("#bases li").count(), 16);
 });
-await prueba("giros: 9 pestañas y la ficha cambia con su enlace", async () => {
+await prueba("giros: una pestaña por giro y la ficha cambia con su enlace", async () => {
   assert.equal(await p.locator("#lista-giros button").count(), ADN.giros.length);
   await p.click("#tab-consultorios");
   await p.waitForSelector("#ficha >> text=Recordatorio por WhatsApp");
@@ -281,7 +281,7 @@ await prueba("diagnóstico: recomienda y arma el WhatsApp", () => enPagina("/her
 await prueba("la página habla de lo que ofrecemos, no de otros negocios", async () => {
   for (const ruta of ["/", "/en/", ...ADN.giros.map((g) => `/giros/${g.id}.html`)]) {
     const { p, ctx } = await abrir(ruta);
-    assert.doesNotMatch(await p.content(), /osako/i, ruta);
+    assert.doesNotMatch(await p.content(), /osako|perlux/i, ruta);
     assert.doesNotMatch(await p.innerText("body"), /\bAbi\b/, ruta + ": el asistente se llama Vektor");
     await ctx.close();
   }
@@ -291,6 +291,15 @@ await prueba("la página habla de lo que ofrecemos, no de otros negocios", async
   assert.equal(await p.locator("#ayudamos .ayuda-fila:not(.ayuda-cab)").count(), 9);
   for (const a of await p.locator(".menu a[href^='#']").all()) assert.equal(await p.locator(await a.getAttribute("href")).count(), 1, "el menú apunta a secciones que existen");
   await ctx.close();
+});
+
+await prueba("páginas por giro: el título no invade la ficha en escritorio", async () => {
+  for (const g of ADN.giros) {
+    const { p, ctx } = await abrir(`/giros/${g.id}.html`, { ancho: 1280, alto: 900 });
+    const { titulo, ficha } = await p.evaluate(() => ({ titulo: document.querySelector("h1").getBoundingClientRect().right, ficha: document.querySelector(".ficha").getBoundingClientRect().left }));
+    assert.ok(titulo <= ficha, `${g.id}: título hasta ${titulo}px, ficha desde ${ficha}px`);
+    await ctx.close();
+  }
 });
 
 // Negocio conectado: kit/config.js con Supabase (falso, en el mismo origen para respetar la CSP).
