@@ -27,7 +27,13 @@ test("al entrar la llamada saluda en español y escucha", async () => {
   assert.equal(r.status, 200);
   assert.match(r.xml, /^<\?xml/);
   assert.match(r.xml, /<Gather input="speech" language="es-MX"[^>]*action="https:\/\/x\.supabase\.co\/functions\/v1\/voz\/telefono\/turno"/);
-  assert.match(r.xml, /gracias por llamar a Taller Hernández\. Soy la asistente virtual/);
+  assert.match(r.xml, /gracias por llamar a Taller Hernández\. Te atiende su asistente virtual/);
+});
+
+test("con nombre de asistente, se presenta con el nombre que eligió el negocio", async () => {
+  const tel = crearTelefono({ anthropic: claude(), negocio: { ...negocio, asistente: "Vektor" }, authToken, urlBase, ahora });
+  const r = await llamar(tel, "/telefono", { CallSid: "CA9", From: "+526691234567" });
+  assert.match(r.xml, /Soy Vektor, asistente virtual\./);
 });
 
 test("un turno: manda lo dicho al asistente por canal teléfono y lee la respuesta", async () => {

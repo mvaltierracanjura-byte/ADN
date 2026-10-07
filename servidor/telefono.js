@@ -14,7 +14,7 @@ import { limpiarTel } from "../kit/agenda.js";
 const VOZ = { es: { language: "es-MX", voice: "Polly.Mia-Neural" }, en: { language: "en-US", voice: "Polly.Joanna-Neural" } };
 const FRASES = {
   es: {
-    saludo: (n) => `Hola, gracias por llamar a ${n}. Soy la asistente virtual. ¿En qué te puedo ayudar?`,
+    saludo: (n, a) => `Hola, gracias por llamar a ${n}. ${a ? `Soy ${a}, asistente virtual` : "Te atiende su asistente virtual"}. ¿En qué te puedo ayudar?`,
     silencio: "¿Sigues ahí? Dime en qué te ayudo.",
     adios: "No te escuché. Puedes volver a llamar o escribirnos por WhatsApp. ¡Hasta luego!",
     transferir: "Te comunico con alguien del equipo, un momento por favor.",
@@ -22,7 +22,7 @@ const FRASES = {
     error: "Perdón, tuve un problema. Te devolvemos la llamada pronto.",
   },
   en: {
-    saludo: (n) => `Hi, thanks for calling ${n}. I'm the virtual assistant. How can I help you?`,
+    saludo: (n, a) => `Hi, thanks for calling ${n}. ${a ? `I'm ${a}, the virtual assistant` : "I'm the virtual assistant"}. How can I help you?`,
     silencio: "Are you still there? Tell me how I can help.",
     adios: "I couldn't hear you. Feel free to call again or message us on WhatsApp. Goodbye!",
     transferir: "Let me connect you with someone on the team, one moment please.",
@@ -76,7 +76,7 @@ export function crearTelefono({ anthropic, negocio, herramientas = [], ejecutorP
       if (ruta === "/telefono") {
         const s = { tel: limpiarTel(params.From || ""), idioma: "es", historial: [], silencios: 0 };
         await sesiones.guardar(id, s);
-        return respuesta(escuchar("es", FRASES.es.saludo(negocio.nombre)));
+        return respuesta(escuchar("es", FRASES.es.saludo(negocio.nombre, negocio.asistente)));
       }
       if (ruta !== "/telefono/turno") return { status: 404, xml: "" };
       const s = (await sesiones.obtener(id)) || { tel: limpiarTel(params.From || ""), idioma: "es", historial: [], silencios: 0 };

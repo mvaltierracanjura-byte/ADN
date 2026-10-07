@@ -43,8 +43,8 @@ export function ruta(c) {
 }
 
 export const RUTAS = {
-  responder: "La asistente contesta con los datos del negocio",
-  preguntar: "Falta un dato: la asistente pregunta",
+  responder: "El asistente contesta con los datos del negocio",
+  preguntar: "Falta un dato: el asistente pregunta",
   persona: "Pasa a una persona del equipo",
   seguimiento: "No requiere respuesta: agendar seguimiento",
 };

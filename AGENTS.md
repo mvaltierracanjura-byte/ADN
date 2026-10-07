@@ -12,7 +12,7 @@ Español primero; `en/` es una versión corta en inglés.
 index.html, en/, privacidad.html, 404.html     # páginas del sitio
 giros/*.html                                   # GENERADAS: node scripts/giros.mjs (también sitemap.xml y robots.txt)
 datos.js                                       # contacto, bases (servicios) y giros (window.ADN; también lo lee Node)
-adn.js                                         # módulo: menú, hélice, bases, giros, demo bilingüe de Abi, calculadora, formulario
+adn.js                                         # módulo: menú, hélice, bases, giros, demo bilingüe de Vektor, calculadora, formulario
 estilos.css, fuentes/, img/                    # diseño (tokens claro/oscuro), tipografías locales, ícono e imagen para compartir
 herramientas/                                  # demos: agenda (+ cita.html), bandeja, reseñas, cobro (+ pagar.html), factura,
   src/*.html → *.html                          #   pronóstico, contenido, google, aviso, diagnóstico. GENERADAS con
@@ -34,7 +34,7 @@ INVESTIGACION.md, MEJORAS.md                   # mercado (incluye videos en 7 id
 |---|---|---|---|---|
 | Agenda con recordatorios | `kit/agenda.js`, `kit/almacen-agenda.js` | `servidor/recordatorios.js` | sección 2 | `herramientas/agenda.html`, `cita.html` |
 | Citas en el calendario (ICS) | `kit/ics.js` | función `calendario` | sección 6 | — |
-| Asistente WhatsApp (es/en) | `kit/idioma.js` | `servidor/asistente.js`, `herramientas-agenda.js`, `whatsapp.js`, `db-supabase.js` | sección 3 | demo de Abi en la portada |
+| Asistente WhatsApp (es/en) | `kit/idioma.js` | `servidor/asistente.js`, `herramientas-agenda.js`, `whatsapp.js`, `db-supabase.js` | sección 3 | demo de Vektor en la portada |
 | Recepcionista telefónica | — | `servidor/telefono.js` (Twilio) | `llamadas` | — |
 | Bandeja y reactivación | `kit/mensajes.js`, `kit/reactivacion.js` | `servidor/clasificar.js` | — | `bandeja.html` |
 | Reseñas de Google | `kit/resenas.js` | `servidor/resenas.js` | — | `resenas.html` |
@@ -60,6 +60,8 @@ INVESTIGACION.md, MEJORAS.md                   # mercado (incluye videos en 7 id
   `server-side-fallback-2026-07-01`, instrucciones fijas en caché y la fecha como mensaje de sistema al final,
   herramientas con `strict: true`, sin `tool_choice` forzado (Opus 5.5 lo rechaza). Si el modelo se niega, se corta o
   no termina: pasa a persona.
+- **El asistente de ADN se llama Vektor** (decisión de Marco, 7 oct 2026). En cada negocio lleva el nombre que el
+  dueño elija (`NEGOCIO_JSON.asistente`); sin nombre, se presenta como "asistente virtual". En español: "el asistente".
 - **Enlaces de pago con base conectada: solo token** (`#t=`). Nunca CLABE ni monto en el enlace: serviría para phishing.
 - **Seguridad**: la llave de servicio solo vive en el servidor. El teléfono del cliente lo pone el sistema, nunca el
   modelo. Firmas de Meta (sha256) y Twilio (sha1) se validan antes de todo. RLS: equipo = fila en `equipo`.
@@ -74,7 +76,7 @@ INVESTIGACION.md, MEJORAS.md                   # mercado (incluye videos en 7 id
 ## Pruebas
 
 ```bash
-node --test pruebas/*.test.mjs                                     # lógica y servidor (84)
+node --test pruebas/*.test.mjs                                     # lógica y servidor (85)
 ADN_DEPS=~/adn-deps node supabase/test-schema.mjs                   # base de datos en Postgres real (83)
 NODE_PATH=$(npm root -g) node pruebas/sitio.mjs [carpeta-capturas]  # navegador: páginas, herramientas y modo conectado (128)
 ```

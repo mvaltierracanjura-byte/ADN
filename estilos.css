@@ -148,7 +148,7 @@ section { padding-block: clamp(56px, 8vw, 96px); }
 .tel-cabeza small { display: block; color: var(--muted); font-size: 0.8rem; }
 .chat { overflow-y: auto; padding: 18px; display: flex; flex-direction: column; gap: 10px; background: color-mix(in srgb, var(--bg) 70%, var(--surface)); }
 .burbuja { max-width: 85%; padding: 10px 14px; border-radius: 16px; font-size: 0.96rem; line-height: 1.45; white-space: pre-line; overflow-wrap: anywhere; }
-.burbuja.abi { background: var(--surface); border: 1px solid var(--line); align-self: flex-start; border-bottom-left-radius: 4px; }
+.burbuja.asistente { background: var(--surface); border: 1px solid var(--line); align-self: flex-start; border-bottom-left-radius: 4px; }
 .burbuja.cliente { background: var(--t); color: var(--surface); align-self: flex-end; border-bottom-right-radius: 4px; }
 .burbuja.sistema { align-self: center; background: transparent; color: var(--muted); font-size: 0.84rem; text-align: center; }
 .sugeridas { display: flex; gap: 8px; overflow-x: auto; padding: 10px 14px 0; }
@@ -233,6 +233,7 @@ section { padding-block: clamp(56px, 8vw, 96px); }
 /* Qué mejoramos */
 .medimos { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
 .medimos .tarjeta { align-content: start; }
+.nombre-propio { border-left: 3px solid var(--a); }
 .medimos .tarjeta h3 { font-size: 1.02rem; }
 @media (max-width: 900px) { .medimos { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 @media (max-width: 560px) { .medimos { grid-template-columns: 1fr; } }

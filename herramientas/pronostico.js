@@ -4,7 +4,8 @@ import { ahoraLocal, fechaMas, fechaLarga } from "../kit/agenda.js";
 const $ = (s) => document.querySelector(s);
 const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]);
 const hoy = ahoraLocal().fecha;
-let ventas = P.ventasEjemplo(fechaMas(hoy, -1));
+// Ventas de ejemplo hasta hoy: el pronóstico es para mañana, como dice la herramienta.
+let ventas = P.ventasEjemplo(hoy);
 const ajustes = { calor: false, lluvia: false, evento: false };
 const REGLAS = { calor: { "Frappé": 1.3, "*": 1 }, lluvia: 0.85, evento: 1.2 };
 $("#fecha").value = hoy;

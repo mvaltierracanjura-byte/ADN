@@ -43,7 +43,8 @@ test("las instrucciones son idénticas entre llamadas (caché) y cambian por can
   assert.equal(instrucciones(negocio), instrucciones(negocio));
   assert.match(instrucciones(negocio, "telefono"), /por teléfono/);
   assert.match(instrucciones(negocio), /español de México o inglés/);
-  assert.match(instrucciones(negocio), /asistente virtual/);
+  assert.match(instrucciones(negocio), /Eres asistente virtual de /);
+  assert.match(instrucciones({ ...negocio, asistente: "Lupita" }), /^Eres Lupita, asistente virtual de /);
 });
 
 test("ciclo con herramienta: consulta horarios y contesta con lo que devolvió", async () => {

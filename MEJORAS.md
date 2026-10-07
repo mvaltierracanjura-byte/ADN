@@ -15,7 +15,11 @@
 - Cuarta ronda (7 oct 2026, pedido de Marco): la página ya no habla de otros negocios (sin caso Osako). Secciones nuevas
   sobre lo que ofrecemos: En qué te ayudamos (hoy contra con ADN), Resultados (qué medimos), Lo que te entregamos,
   ¿Es para ti?, Tus datos y 6 preguntas frecuentes más. En inglés, "What we improve".
-- 295 pruebas automáticas (84 de lógica, 83 de base de datos, 128 de navegador).
+- Quinta ronda (7 oct 2026): el asistente se llama Vektor y se adapta a cada negocio con el nombre que el dueño elija.
+  Revisión completa: corregidos el dato de llamadas de talleres (no coincidía con su fuente), la base de "Reseñas" en el
+  diagnóstico, el pronóstico (ahora es para mañana), el aviso de privacidad (las herramientas guardan datos de ejemplo
+  en el navegador), la revisión mensual (va con la mensualidad), el menú de las páginas por giro y una pregunta mal puntuada.
+- 296 pruebas automáticas (85 de lógica, 83 de base de datos, 128 de navegador).
 
 **Falta (depende de Marco):** domicilio para el aviso de privacidad, conectar Netlify al repo, dominio y
 correo propios, perfil de Google, foto, precios y medición de visitas.

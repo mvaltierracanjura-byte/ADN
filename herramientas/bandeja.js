@@ -6,7 +6,7 @@ const $ = (s) => document.querySelector(s);
 const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]);
 const pesos = (n) => new Intl.NumberFormat("es-MX", { style: "currency", currency: "MXN", minimumFractionDigits: 2 }).format(n);
 const ETIQ = { queja: "Queja", estado_pedido: "¿Dónde está mi pedido?", pedido: "Pedido", cita: "Cita", precio: "Precio", horario: "Horario", ubicacion: "Ubicación", pago: "Pago", factura: "Factura", saludo: "Saludo", gracias: "Gracias", otro: "Otro" };
-const CORTO = { responder: "Contesta la IA", preguntar: "Falta un dato", persona: "A una persona", seguimiento: "Seguimiento" };
+const CORTO = { responder: "Contesta el asistente", preguntar: "Falta un dato", persona: "A una persona", seguimiento: "Seguimiento" };
 const CLASE = { responder: "confirmada", preguntar: "pendiente", persona: "no_asistio", seguimiento: "asistio" };
 const EJEMPLOS = [
   ["09:02", "Laura", "¿A qué hora abren hoy?"], ["09:15", "Jorge", "Mi pedido 4823 llegó incompleto, faltó una galleta"],
@@ -20,7 +20,7 @@ let mensajes = EJEMPLOS.map(([hora, quien, texto]) => ({ hora, quien, texto }));
 function pintarBandeja() {
   const filas = mensajes.map((m) => ({ ...m, c: clasificar(m.texto) })).map((m) => ({ ...m, r: ruta(m.c) }));
   const cuenta = (r) => filas.filter((f) => f.r === r).length;
-  $("#resumen-rutas").innerHTML = `<div><b>${cuenta("responder")}</b><span>contesta la asistente</span></div><div><b>${cuenta("preguntar")}</b><span>falta un dato</span></div><div><b>${cuenta("persona")}</b><span>para una persona</span></div>`;
+  $("#resumen-rutas").innerHTML = `<div><b>${cuenta("responder")}</b><span>contesta el asistente</span></div><div><b>${cuenta("preguntar")}</b><span>falta un dato</span></div><div><b>${cuenta("persona")}</b><span>para una persona</span></div>`;
   $("#bandeja").innerHTML = filas.map((f) => `<li><span class="hora">${esc(f.hora)}</span><div>
     <div class="quien"><b>${esc(f.quien)}</b><span class="pill ${CLASE[f.r]}" title="${esc(RUTAS[f.r])}">${esc(CORTO[f.r])}</span>${f.c.urgencia === "alta" ? '<span class="pill no_asistio">Urgente</span>' : ""}</div>
     <div class="det">“${esc(f.texto)}” · ${esc(ETIQ[f.c.intencion])}${f.c.pedido ? ` · pedido ${esc(f.c.pedido)}` : ""}${f.c.motivo ? ` · ${esc(f.c.motivo)}` : ""}</div></div></li>`).join("");

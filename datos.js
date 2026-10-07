@@ -12,14 +12,14 @@
     // Las cuatro bases. `nuevo: true` = servicio que salió de la investigación (INVESTIGACION.md).
     bases: [
       { letra: "A", nombre: "Atender", frase: "Que ningún cliente se quede sin respuesta, a cualquier hora.", servicios: [
-        { t: "Asistente de WhatsApp e Instagram con IA", d: "Contesta precios y horarios, toma pedidos y citas. Si no sabe, pasa a una persona." },
+        { t: "Asistente de WhatsApp e Instagram con IA", d: "Contesta precios y horarios, toma pedidos y citas, con el nombre que tú elijas. Si no sabe, pasa a una persona." },
         { t: "Recepcionista telefónica con IA", d: "Contesta las llamadas que hoy se pierden en hora pico o fuera de horario.", nuevo: true },
         { t: "Página web y menú en línea", d: "Rápida en el celular, con tu marca y en español e inglés." },
         { t: "Aparecer en Google y en las respuestas de IA", d: "Perfil de Google, datos para buscadores y contenido que ChatGPT y Gemini pueden citar.", nuevo: true },
       ]},
       { letra: "T", nombre: "Tomar pedidos y cobrar", frase: "Del “me interesa” al pago, sin vueltas.", servicios: [
         { t: "Pedidos, reservas y citas en línea", d: "Con folio y seguimiento para el cliente." },
-        { t: "Cobro con tarjeta, transferencia o CoDi", d: "Liga de pago, revisión de comprobantes y cobro por QR desde el celular.", nuevo: true },
+        { t: "Cobro con tarjeta, transferencia o CoDi", d: "Liga de pago, revisión de comprobantes y CoDi con QR cuando tu banco lo ofrece.", nuevo: true },
         { t: "Facturación automática", d: "Tu cliente se factura solo con su RFC; tú no capturas nada.", nuevo: true },
         { t: "Envío calculado por colonia", d: "Cotiza el costo de reparto antes de cobrar." },
       ]},
@@ -82,7 +82,7 @@
       { id: "talleres", nombre: "Talleres y servicios a domicilio", corto: "Talleres",
         dolor: "Cotizaciones a mano y clientes que preguntan “¿ya está mi carro?” o “¿a qué hora llegan?”.",
         hace: [["T","Cotización rápida desde el celular con tus precios, enviada por WhatsApp."],["C","Órdenes de trabajo con estado: recibido, en proceso, listo."],["A","Enlace de seguimiento para que el cliente vea el avance sin llamar."],["G","Recordatorio de servicio: afinación, mantenimiento, fumigación."]],
-        dato: "62% de las llamadas a pequeños negocios de servicios no se contesta, y 85% de esas personas no vuelve a llamar.",
+        dato: "Los pequeños negocios dejan sin contestar cerca de 27% de las llamadas en horario y entre 40% y 60% fuera de horario; 85% de quien no logra comunicarse no vuelve a llamar.",
         fuente: ["Beancount", "https://beancount.io/blog/2026/08/16/ai-receptionist-small-business-missed-call-revenue-bookkeeping-guide"] },
     ],
   };

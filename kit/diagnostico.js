@@ -28,7 +28,7 @@ export function diagnosticar(r) {
     porque: `Pierdes unas ${r.llamadasPerdidasDia} llamadas al día; la mayoría de quienes caen en buzón llama a otro negocio.`,
     impacto: +r.llamadasPerdidasDia * mes * 0.3 * ticket * 0.6 });
   // 4. Google
-  if (r.google !== "si") recs.push({ id: "google", base: "A", titulo: r.google === "no" ? "Perfil de Google y aparecer en las respuestas de la IA" : "Reseñas de Google: pedirlas y contestarlas",
+  if (r.google !== "si") recs.push({ id: "google", base: r.google === "no" ? "A" : "G", titulo: r.google === "no" ? "Perfil de Google y aparecer en las respuestas de la IA" : "Reseñas de Google: pedirlas y contestarlas",
     porque: r.google === "no" ? "Si no estás en Google, no existes para quien busca “cerca de mí” ni para ChatGPT o Gemini." : "Con pocas reseñas o sin contestarlas, Google y la gente prefieren a la competencia.",
     impacto: ticket * (r.google === "no" ? 20 : 8) });
   // 5. Cobro

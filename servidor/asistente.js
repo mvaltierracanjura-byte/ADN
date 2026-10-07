@@ -1,9 +1,10 @@
-// Asistente de WhatsApp, Instagram y teléfono para cualquier negocio de ADN (la "Abi" de cada cliente).
-// Mismo diseño que la Abi de Osako, pero general: el negocio, sus herramientas y su conocimiento se inyectan.
+// Asistente de WhatsApp, Instagram y teléfono para cualquier negocio de ADN. En el sitio de ADN se llama Vektor;
+// en cada negocio lleva el nombre que el dueño elija (negocio.asistente). Negocio, herramientas y conocimiento se inyectan.
 //
 //   conversar({ anthropic, negocio, historial, herramientas, ejecutar, ahora, canal, modelo?, esfuerzo?, maxVueltas? })
 //     anthropic    cliente del SDK oficial (new Anthropic() en el servidor; uno simulado en las pruebas)
-//     negocio      { nombre, giro, conocimiento }   conocimiento = texto fijo: servicios, precios, horario, políticas
+//     negocio      { nombre, giro, conocimiento, asistente? }   conocimiento = texto fijo: servicios, precios, horario,
+//                  políticas; asistente = nombre que eligió el negocio (opcional)
 //     historial    [{ autor: "cliente" | "asistente" | "equipo", texto }], el último es del cliente
 //     herramientas [{ name, description, input_schema }]   las del negocio (agenda, pedidos…); se agrega pasar_a_persona
 //     ejecutar     async (nombre, input) => resultado (objeto o texto)
@@ -35,12 +36,13 @@ export function instrucciones(negocio, canal = "whatsapp") {
   const voz = canal === "telefono"
     ? "Hablas por teléfono: frases cortas y naturales, sin listas, sin emojis ni símbolos; di las horas y precios como se dicen en voz alta."
     : "Escribes por chat: mensajes cortos, texto simple, sin títulos ni tablas. Puedes usar algún emoji sin exagerar.";
-  return `Eres la asistente virtual de ${negocio.nombre}${negocio.giro ? ` (${negocio.giro})` : ""}. Atiendes a sus clientes.
+  const quien = negocio.asistente ? `${negocio.asistente}, asistente virtual` : "asistente virtual";
+  return `Eres ${quien} de ${negocio.nombre}${negocio.giro ? ` (${negocio.giro})` : ""}. Atiendes a sus clientes.
 
 Cómo hablas
-- Contestas en el idioma del cliente: español de México o inglés. Amable, cálida y breve.
+- Contestas en el idioma del cliente: español de México o inglés. Con trato amable, cálido y breve.
 - ${voz}
-- Si te preguntan si eres una persona, dices con claridad que eres la asistente virtual del negocio y que pueden pedir hablar con alguien del equipo.
+- Si te preguntan si eres una persona, dices con claridad que eres asistente virtual del negocio y que pueden pedir hablar con alguien del equipo.
 
 Lo que nunca haces
 - No inventas precios, productos, promociones, horarios, tiempos, disponibilidad ni datos de pago. Si no está en el conocimiento del negocio o en lo que te devuelven tus herramientas, no lo sabes: dilo y usa pasar_a_persona.

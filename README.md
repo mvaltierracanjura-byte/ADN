@@ -4,7 +4,7 @@ Estudio de sistemas digitales e inteligencia artificial para negocios locales de
 
 Este repo tiene:
 - **La página de ADN**: quiénes somos, las cuatro bases (Atender, Tomar y cobrar, Controlar, Ganar clientes), demo
-  bilingüe de la asistente Abi, calculadora, diagnóstico, nueve páginas por giro, versión en inglés y aviso de privacidad.
+  bilingüe del asistente Vektor (en cada negocio, con el nombre que el dueño elija), calculadora, diagnóstico, nueve páginas por giro, versión en inglés y aviso de privacidad.
 - **El kit para clientes**, con 11 herramientas que se pueden probar en el sitio: agenda con recordatorios,
   asistente de WhatsApp y recepcionista telefónica con IA, bandeja inteligente y reactivación de clientes, reseñas
   de Google, cobro por transferencia sin comisión, autofactura CFDI 4.0, pronóstico de producción, calendario de

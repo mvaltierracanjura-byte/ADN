@@ -44,7 +44,7 @@ Secretos (Supabase → Edge Functions → Secrets). `SUPABASE_URL` y `SUPABASE_S
 |---|---|
 | `ANTHROPIC_API_KEY` | El asistente (Claude). |
 | `ADN_MODELO` | Opcional. Por defecto `claude-opus-5-5`; para menor costo, `claude-sonnet-5-5`. |
-| `NEGOCIO_JSON` | `{"nombre":"…","giro":"…","conocimiento":"servicios, precios, horario, políticas…","agenda":true}` |
+| `NEGOCIO_JSON` | `{"nombre":"…","giro":"…","asistente":"Vektor o el nombre que elija el dueño","conocimiento":"servicios, precios, horario, políticas…","agenda":true}` |
 | `SITIO_URL` | `https://<sitio>/herramientas` (para el enlace de la cita) |
 | `WA_TOKEN`, `WA_TELEFONO_ID`, `WA_SECRETO_APP`, `WA_VERIFICAR` | WhatsApp Cloud API (Meta). |
 | `WA_PLANTILLA_RECORDATORIO` | Nombre de la plantilla aprobada (ver abajo). |

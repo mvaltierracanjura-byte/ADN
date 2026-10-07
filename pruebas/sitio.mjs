@@ -85,8 +85,8 @@ await prueba("enlaces de WhatsApp con el número de ADN", async () => {
   assert.ok(hrefs.length >= 3);
   for (const h of hrefs) assert.ok(h.startsWith("https://wa.me/526692166036?text="), h);
 });
-await prueba("demo de Abi: pedido, total, folio y paso a persona", async () => {
-  const ultima = () => p.locator("#chat .burbuja.abi").last().textContent();
+await prueba("demo de Vektor: pedido, total, folio y paso a persona", async () => {
+  const ultima = () => p.locator("#chat .burbuja.asistente").last().textContent();
   await p.click("#sugeridas >> text=Quiero 2 lattes y una galleta");
   await p.waitForFunction(() => /\$175/.test(document.querySelector("#chat").textContent));
   assert.match(await ultima(), /2 × Latte, 1 × Galleta rellena/);
@@ -167,7 +167,7 @@ await prueba("SEO: título, descripción, canonical y og:image en cada página i
 // 6. Herramientas
 const enPagina = async (ruta, fn, op = {}) => { const { p, ctx, errores } = await abrir(ruta, { ancho: 1280, alto: 900, ...op }); try { await fn(p); assert.deepEqual(errores, []); } finally { await ctx.close(); } };
 
-await prueba("demo de Abi contesta en inglés", () => enPagina("/", async (p) => {
+await prueba("demo de Vektor contesta en inglés", () => enPagina("/", async (p) => {
   await p.click("#sugeridas >> text=Hi! What time do you open?");
   await p.waitForFunction(() => /We're open Monday to Saturday/.test(document.querySelector("#chat").textContent));
 }));
@@ -271,9 +271,11 @@ await prueba("la página habla de lo que ofrecemos, no de otros negocios", async
   for (const ruta of ["/", "/en/", ...ADN.giros.map((g) => `/giros/${g.id}.html`)]) {
     const { p, ctx } = await abrir(ruta);
     assert.doesNotMatch(await p.content(), /osako/i, ruta);
+    assert.doesNotMatch(await p.innerText("body"), /\bAbi\b/, ruta + ": el asistente se llama Vektor");
     await ctx.close();
   }
   const { p, ctx } = await abrir("/");
+  assert.match(await p.textContent("#demo"), /Vektor[\s\S]*nombre que tú prefieras/);
   for (const id of ["ayudamos", "mejoramos", "entregamos", "para-quien", "cuidamos"]) assert.equal(await p.locator("#" + id).count(), 1, id);
   assert.equal(await p.locator("#ayudamos .ayuda-fila:not(.ayuda-cab)").count(), 9);
   for (const a of await p.locator(".menu a[href^='#']").all()) assert.equal(await p.locator(await a.getAttribute("href")).count(), 1, "el menú apunta a secciones que existen");

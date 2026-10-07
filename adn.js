@@ -77,7 +77,7 @@ import { detectarIdioma } from "./kit/idioma.js";
     mostrar(leer("adn-giro") || ADN.giros[0].id);
   }
 
-  // Demo de Abi con un negocio de ejemplo (respuestas fijas, sin inteligencia artificial real).
+  // Demo de Vektor con un negocio de ejemplo (respuestas fijas, sin inteligencia artificial real).
   const chat = $("#chat");
   if (chat) {
     const NEGOCIO = {
@@ -95,7 +95,7 @@ import { detectarIdioma } from "./kit/idioma.js";
     let pedido = {}, entregaPreguntada = false, idioma = "es";
     const T = (es, en) => (idioma === "en" ? en : es);
     const nombreDe = (p) => (idioma === "en" ? NOMBRE_EN[p.id] : p.nombre);
-    const decir = (texto, quien = "abi") => {
+    const decir = (texto, quien = "asistente") => {
       const b = document.createElement("div");
       b.className = "burbuja " + quien; b.textContent = texto;
       chat.appendChild(b); chat.scrollTop = chat.scrollHeight;
@@ -149,13 +149,13 @@ import { detectarIdioma } from "./kit/idioma.js";
         pedido = {};
         return;
       }
-      if (/ (hola|buenas|buen dia|buenos dias|buenas tardes|buenas noches|hi|hello|hey) /.test(t)) return decir(T("¡Hola! Soy Abi, la asistente de Café La Muestra. Te puedo pasar el menú, el horario o tomar tu pedido.", "Hi! I'm Abi, Café La Muestra's assistant. I can share the menu, our hours, or take your order."));
+      if (/ (hola|buenas|buen dia|buenos dias|buenas tardes|buenas noches|hi|hello|hey) /.test(t)) return decir(T("¡Hola! Soy Vektor, el asistente de Café La Muestra. Te puedo pasar el menú, el horario o tomar tu pedido.", "Hi! I'm Vektor, Café La Muestra's assistant. I can share the menu, our hours, or take your order."));
       if (/ (gracias|thanks|thank you) /.test(t)) return decir(T("¡A ti! Aquí estoy si necesitas algo más.", "You're welcome! I'm here if you need anything else."));
       persona(T("Esa no la sé con certeza y no quiero inventarte. Te paso con una persona del equipo para que te confirme.", "I'm not sure about that and I don't want to guess. I'm passing you to someone on the team who can confirm."));
     }
     const enviar = (texto) => { if (!texto.trim()) return; decir(texto, "cliente"); setTimeout(() => responder(texto), 450); };
     decir("Café La Muestra es un negocio de ejemplo. Las respuestas son de demostración.", "sistema");
-    decir("¡Hola! Soy Abi, la asistente de Café La Muestra. ¿Qué te sirvo hoy?");
+    decir("¡Hola! Soy Vektor, el asistente de Café La Muestra. ¿Qué te sirvo hoy?");
     $$("#sugeridas button").forEach((b) => b.addEventListener("click", () => enviar(b.textContent)));
     const forma = $("#escribir");
     forma.addEventListener("submit", (e) => { e.preventDefault(); const i = $("#chat-texto"); enviar(i.value); i.value = ""; });
