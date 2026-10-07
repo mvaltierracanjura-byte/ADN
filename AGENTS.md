@@ -79,7 +79,7 @@ INVESTIGACION.md, MEJORAS.md                   # mercado (incluye videos en 7 id
 ```bash
 node --test pruebas/*.test.mjs                                     # lógica y servidor (85)
 ADN_DEPS=~/adn-deps node supabase/test-schema.mjs                   # base de datos en Postgres real (83)
-NODE_PATH=$(npm root -g) node pruebas/sitio.mjs [carpeta-capturas]  # navegador: páginas, herramientas y modo conectado (133)
+NODE_PATH=$(npm root -g) node pruebas/sitio.mjs [carpeta-capturas]  # navegador: páginas, herramientas y modo conectado (134)
 ```
 
 ## Pendientes de Marco

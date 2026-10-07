@@ -302,6 +302,15 @@ await prueba("páginas por giro: el título no invade la ficha en escritorio", a
   }
 });
 
+await prueba("inglés: sección de bienes raíces con agencias y desarrolladoras", async () => {
+  const { p, ctx } = await abrir("/en/");
+  assert.equal(await p.locator("#real-estate .tarjeta").count(), 2);
+  assert.equal(await p.locator("#real-estate li").count(), 16);
+  assert.equal(await p.locator('.menu a[href="#real-estate"]').count(), 1);
+  assert.match(await p.getAttribute("#real-estate a.boton.wa", "href"), /^https:\/\/wa\.me\/526692166036\?text=/);
+  await ctx.close();
+});
+
 // Negocio conectado: kit/config.js con Supabase (falso, en el mismo origen para respetar la CSP).
 async function conectado(ruta, rpcs, fn) {
   const ctx = await navegador.newContext({ viewport: { width: 390, height: 844 } });

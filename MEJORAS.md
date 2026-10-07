@@ -21,7 +21,8 @@
   en el navegador), la revisión mensual (va con la mensualidad), el menú de las páginas por giro y una pregunta mal puntuada.
 - Sexta ronda (7 oct 2026): oferta inmobiliaria a partir de Perlux (`docs/inmobiliario.md`). "Inmobiliarias y asesores"
   pasa de 4 a 10 herramientas y hay un giro nuevo, "Desarrolladoras y preventas". La página no menciona Perlux.
-- 301 pruebas automáticas (85 de lógica, 83 de base de datos, 133 de navegador).
+- La versión en inglés tiene la sección "Real estate" con lo mismo para agencias y desarrolladoras.
+- 302 pruebas automáticas (85 de lógica, 83 de base de datos, 134 de navegador).
 
 **Falta (depende de Marco):** domicilio para el aviso de privacidad, conectar Netlify al repo, dominio y
 correo propios, perfil de Google, foto, precios y medición de visitas.
