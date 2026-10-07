@@ -26,6 +26,7 @@ supabase/functions/{whatsapp,voz,recordatorios,  # Edge Functions (Deno); antes 
 pruebas/                                       # *.test.mjs (node --test) y sitio.mjs (Playwright)
 docs/descubrimiento.md                         # guía de entrevista, piloto y propuesta
 docs/inmobiliario.md                           # oferta para inmobiliarias y desarrolladoras (sale de Perlux; interno)
+docs/herramientas-externas.md                  # conectores, plugins y repos que conviene usar (y cuáles no)
 INVESTIGACION.md, MEJORAS.md                   # mercado (incluye videos en 7 idiomas) y estado de la página
 ```
 

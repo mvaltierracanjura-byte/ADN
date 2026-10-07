@@ -112,6 +112,7 @@ Supabase → Integrations → Cron: cada hora, petición POST a `/functions/v1/r
   la barra del negocio.
 - **CoDi con QR**: depende del banco del negocio. Hoy: SPEI a la CLABE o DiMo al celular.
 - **Reseñas**: leer y publicar respuestas requiere la API de Google Business Profile (OAuth del dueño).
-  Hoy: invitación con enlace directo y respuestas que el dueño copia.
+  Hoy: invitación con enlace directo y respuestas que el dueño copia. Atajo: el conector Windsor.ai ya contesta
+  reseñas y publica en el perfil (`docs/herramientas-externas.md`), siempre con aprobación del dueño.
 - **Google Calendar en dos sentidos** (que un evento del calendario bloquee la agenda): requiere OAuth del negocio.
   Hoy la agenda se ve en el calendario (ICS), pero los bloqueos se ponen en la tabla `bloqueos`.
